@@ -17,7 +17,6 @@ public class BookReview {
   private JFrame frame;
   private JPanel menuPanel;
   private JPanel contentPanel;
-  private ReviewsPanel reviewsPanel;
 
   public static void main(String[] args) throws FileNotFoundException {
     BookReview application = new BookReview();
@@ -77,7 +76,7 @@ public class BookReview {
   public JButton writeReview() {
     JButton button = new JButton("리뷰 쓰기");
     button.addActionListener(event -> {
-      WritePanel writePanel = new WritePanel(reviews, reviewsPanel);
+      WritePanel writePanel = new WritePanel(reviews);
       showContentPanel(writePanel);
     });
     return button;
