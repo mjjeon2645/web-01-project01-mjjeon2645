@@ -5,6 +5,7 @@ import utils.ReviewsLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class BookReview {
@@ -14,12 +15,12 @@ public class BookReview {
   private JPanel menuPanel;
   private JPanel contentPanel;
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws FileNotFoundException {
     BookReview application = new BookReview();
     application.run();
   }
 
-  public BookReview() {
+  public BookReview() throws FileNotFoundException {
     ReviewsLoader reviewsLoader = new ReviewsLoader();
     reviews = reviewsLoader.load();
   }
