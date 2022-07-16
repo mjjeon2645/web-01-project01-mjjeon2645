@@ -22,8 +22,7 @@ public class ReviewsLoader {
 
       String[] words = line.split(",");
 
-      Review review = new Review(words[0], words[1], words[2], words[3]);
-      reviews.add(review);
+      reviews.add(new Review(words[0], words[1], words[2], words[3]));
     }
 
     return reviews;
