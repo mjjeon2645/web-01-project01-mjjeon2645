@@ -33,6 +33,26 @@ public class Review {
     return title;
   }
 
+  public String text() {
+    return text;
+  }
+
+  public String state() {
+    return state;
+  }
+
+  public void modifyTitle(String title) {
+    this.title = title;
+  }
+
+  public void modifyText(String text) {
+    this.text = text;
+  }
+
+  public void deleted() {
+    this.state = DELETED;
+  }
+
   public String toCsvRow() {
     return String.join(",", author, title, text, state);
   }

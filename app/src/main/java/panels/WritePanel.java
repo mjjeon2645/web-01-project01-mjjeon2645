@@ -8,11 +8,9 @@ import java.util.List;
 
 public class WritePanel extends JPanel {
   private final List<Review> reviews;
-  private final ReviewsPanel reviewsPanel;
 
-  public WritePanel(List<Review> reviews, ReviewsPanel reviewsPanel) {
+  public WritePanel(List<Review> reviews) {
     this.reviews = reviews;
-    this.reviewsPanel = reviewsPanel;
 
     this.setLayout(new GridLayout(0, 1));
 
