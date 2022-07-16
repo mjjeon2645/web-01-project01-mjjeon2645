@@ -1,10 +1,15 @@
+import models.Review;
 import panels.ReviewsPanel;
 import panels.WritePanel;
+import utils.ReviewsLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class BookReview {
+  private List<Review> reviews;
+
   private JFrame frame;
   private JPanel menuPanel;
   private JPanel contentPanel;
@@ -12,6 +17,11 @@ public class BookReview {
   public static void main(String[] args) {
     BookReview application = new BookReview();
     application.run();
+  }
+
+  public BookReview() {
+    ReviewsLoader reviewsLoader = new ReviewsLoader();
+    reviews = reviewsLoader.load();
   }
 
   public void run() {
