@@ -5,7 +5,10 @@ import utils.ReviewsLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public class BookReview {
@@ -14,6 +17,7 @@ public class BookReview {
   private JFrame frame;
   private JPanel menuPanel;
   private JPanel contentPanel;
+  private ReviewsPanel reviewsPanel;
 
   public static void main(String[] args) throws FileNotFoundException {
     BookReview application = new BookReview();
@@ -36,6 +40,19 @@ public class BookReview {
   public void initFrame() {
     frame = new JFrame("Book Review 100");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        ReviewsLoader reviewsLoader = new ReviewsLoader();
+
+        try {
+        reviewsLoader.saveReviews(reviews);
+        } catch (IOException ex) {
+          throw new RuntimeException(ex);
+        }
+      }
+    });
+
     frame.setSize(400, 600);
     frame.setVisible(true);
   }
@@ -51,7 +68,7 @@ public class BookReview {
   public JButton displayReviews() {
     JButton button = new JButton("리뷰 보기");
     button.addActionListener(event -> {
-      ReviewsPanel reviewsPanel = new ReviewsPanel();
+      ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
       showContentPanel(reviewsPanel);
     });
     return button;
@@ -60,7 +77,7 @@ public class BookReview {
   public JButton writeReview() {
     JButton button = new JButton("리뷰 쓰기");
     button.addActionListener(event -> {
-      WritePanel writePanel = new WritePanel();
+      WritePanel writePanel = new WritePanel(reviews, reviewsPanel);
       showContentPanel(writePanel);
     });
     return button;

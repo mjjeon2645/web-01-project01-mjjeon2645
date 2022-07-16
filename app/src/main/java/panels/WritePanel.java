@@ -4,9 +4,16 @@ import models.Review;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class WritePanel extends JPanel {
-  public WritePanel() {
+  private final List<Review> reviews;
+  private final ReviewsPanel reviewsPanel;
+
+  public WritePanel(List<Review> reviews, ReviewsPanel reviewsPanel) {
+    this.reviews = reviews;
+    this.reviewsPanel = reviewsPanel;
+
     this.setLayout(new GridLayout(0, 1));
 
     JLabel titleLabel = new JLabel("리뷰 쓰기");
@@ -31,7 +38,9 @@ public class WritePanel extends JPanel {
       String text = reviewTextArea.getText();
 
       Review review = new Review(author, title, text);
+      reviews.add(review);
     });
+
     this.add(writeButton);
   }
 }
