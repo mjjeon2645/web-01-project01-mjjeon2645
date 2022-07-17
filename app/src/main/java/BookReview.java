@@ -43,9 +43,8 @@ public class BookReview {
       @Override
       public void windowClosing(WindowEvent e) {
         ReviewsLoader reviewsLoader = new ReviewsLoader();
-
         try {
-        reviewsLoader.saveReviews(reviews);
+        reviewsLoader.save(reviews);
         } catch (IOException ex) {
           throw new RuntimeException(ex);
         }

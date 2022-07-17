@@ -27,7 +27,7 @@ public class ReviewsLoader {
     return reviews;
   }
 
-  public void saveReviews(List<Review> reviews) throws IOException {
+  public void save(List<Review> reviews) throws IOException {
     FileWriter fileWriter = new FileWriter("reviewsdata.csv");
     for(Review review : reviews) {
       String line = review.toCsvRow();
