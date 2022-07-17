@@ -1,3 +1,5 @@
+package applications;
+
 import models.Review;
 import panels.ReviewsPanel;
 import panels.WritePanel;
@@ -31,7 +33,9 @@ public class BookReview {
   public void run() {
     initFrame();
 
-    initMenus();
+    initDisplayMenu();
+
+    initWriteMenu();
 
     initContentPanel();
   }
@@ -55,35 +59,52 @@ public class BookReview {
     frame.setVisible(true);
   }
 
-  public void initMenus() {
+  public void initDisplayMenu() {
     menuPanel = new JPanel();
     frame.add(menuPanel, BorderLayout.PAGE_START);
 
     menuPanel.add(displayReviews());
-    menuPanel.add(writeReview());
   }
 
   public JButton displayReviews() {
-    JButton button = new JButton("리뷰 보기");
+    JButton button = new JButton("100글자 북 리뷰");
     button.addActionListener(event -> {
       ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+
       showContentPanel(reviewsPanel);
     });
+
     return button;
+  }
+
+  public void initWriteMenu() {
+    JPanel writeMenuPanel = new JPanel();
+    writeMenuPanel.setLayout(new BorderLayout());
+    frame.add(writeMenuPanel, BorderLayout.SOUTH);
+
+    JPanel buttonLayoutPanel = new JPanel();
+    writeMenuPanel.add(buttonLayoutPanel);
+    writeMenuPanel.add(writeReview(), BorderLayout.EAST);
   }
 
   public JButton writeReview() {
     JButton button = new JButton("리뷰 쓰기");
     button.addActionListener(event -> {
-      WritePanel writePanel = new WritePanel(reviews);
+      WritePanel writePanel = null;
+      try {
+        writePanel = new WritePanel(reviews);
+      } catch (FileNotFoundException e) {
+        throw new RuntimeException(e);
+      }
       showContentPanel(writePanel);
     });
+
     return button;
   }
 
   public void initContentPanel() {
     contentPanel = new JPanel();
-    frame.add(contentPanel);
+    frame.add(contentPanel, BorderLayout.CENTER);
   }
 
   public void showContentPanel(JPanel panel) {

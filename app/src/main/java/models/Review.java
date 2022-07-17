@@ -7,19 +7,22 @@ public class Review {
   public static final String DELETED = "DELETED";
 
   private String author;
+  private String password;
   private String title;
   private String text;
   private String state;
 
-  public Review(String author, String title, String text) {
+  public Review(String author, String password, String title, String text) {
     this.author = author;
+    this.password = password;
     this.title = title;
     this.text = text;
     this.state = DISPLAY;
   }
 
-  public Review(String author, String title, String text, String state) {
+  public Review(String author, String password, String title, String text, String state) {
     this.author = author;
+    this.password = password;
     this.title = title;
     this.text = text;
     this.state = state;
@@ -27,6 +30,10 @@ public class Review {
 
   public String author() {
     return author;
+  }
+
+  public String password() {
+    return password;
   }
 
   public String title() {
@@ -58,7 +65,7 @@ public class Review {
   }
 
   public String toCsvRow() {
-    return String.join(",", author, title, text, state);
+    return String.join(",", author, password, title, text, state);
   }
 
   @Override
@@ -70,6 +77,7 @@ public class Review {
   public boolean equals(Object other) {
     Review otherReview = (Review) other;
     return Objects.equals(this.author, otherReview.author)
+        && Objects.equals(this.password, otherReview.password)
         && Objects.equals(this.title, otherReview.title)
         && Objects.equals(this.text, otherReview.text)
         && Objects.equals(this.state, otherReview.state);

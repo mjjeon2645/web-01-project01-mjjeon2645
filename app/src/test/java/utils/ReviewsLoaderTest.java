@@ -20,7 +20,7 @@ class ReviewsLoaderTest {
     Review review1 = reviews.get(0);
     Review review2 = reviews.get(1);
 
-    assertEquals(review1, new Review("봄이1", "객체 지향", "어렵지만 재밌네요~", "DISPLAY"));
-    assertEquals(review2, new Review("봄이2", "클린 코드", "다 읽으셨나요?", "DELETED"));
+    assertEquals(review1, new Review("봄이1", "1234", "객체 지향", "어렵지만 재밌네요~", "DISPLAY"));
+    assertEquals(review2, new Review("봄이2", "abcd", "클린 코드", "다 읽으셨나요?", "DELETED"));
   }
 }

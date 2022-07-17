@@ -1,10 +1,9 @@
 package panels;
 
 import models.Review;
-import utils.ReviewsLoader;
 
 import javax.swing.*;
-import java.io.IOException;
+import java.awt.*;
 import java.util.List;
 
 public class DetailsPopUp extends JPanel {
@@ -15,6 +14,7 @@ public class DetailsPopUp extends JPanel {
   private JTextField authorField;
   private JTextField titleField;
   private JTextArea contentArea;
+  private JTextField passwordField;
 
   public DetailsPopUp(List<Review> reviews, Review review) {
     this.reviews = reviews;
@@ -30,15 +30,27 @@ public class DetailsPopUp extends JPanel {
 
     initAuthorField();
 
+    initPasswordField();
+
     initTitleField();
 
-    initContentArea();
+    initTextArea();
 
     initDeleteButton();
 
     initModifyButton();
 
     detailsFrame.add(detailsPanel);
+  }
+
+  public void initPasswordField() {
+    JLabel password = new JLabel("비밀번호");
+    password.setBounds(50, 70, 100, 30);
+    detailsPanel.add(password);
+
+    passwordField = new JTextField(4);
+    passwordField.setBounds(110, 70, 250, 30);
+    detailsPanel.add(passwordField);
   }
 
   public void initAuthorField() {
@@ -48,6 +60,7 @@ public class DetailsPopUp extends JPanel {
 
     authorField = new JTextField(20);
     authorField.setText(review.author());
+    authorField.setEditable(false);
     authorField.setBounds(110, 30, 150, 30);
     detailsPanel.add(authorField);
   }
@@ -62,7 +75,7 @@ public class DetailsPopUp extends JPanel {
     detailsPanel.add(titleField);
   }
 
-  public void initContentArea() {
+  public void initTextArea() {
     contentArea = new JTextArea();
     contentArea.setText(review.text());
     contentArea.setLineWrap(true);
@@ -74,18 +87,12 @@ public class DetailsPopUp extends JPanel {
     JButton deleteButton = new JButton("삭제하기");
     deleteButton.setBounds(300, 420, 70, 35);
     deleteButton.addActionListener(event -> {
-      review.deleted();
-
-      ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
-
-      ReviewsLoader reviewsLoader = new ReviewsLoader();
-      try {
-        reviewsLoader.save(reviews);
-      } catch (IOException e) {
-        throw new RuntimeException(e);
+      if (review.password().equals(passwordField.getText())) {
+        review.deleted();
+        detailsFrame.setVisible(false);
       }
 
-      detailsFrame.setVisible(false);
+      displayWarningMessage();
     });
 
     detailsPanel.add(deleteButton);
@@ -95,13 +102,36 @@ public class DetailsPopUp extends JPanel {
     JButton modifyButton = new JButton("수정하기");
     modifyButton.setBounds(385, 420, 70, 35);
     modifyButton.addActionListener(event -> {
-      review.modifyAuthor(authorField.getText());
-      review.modifyTitle(titleField.getText());
-      review.modifyText(contentArea.getText());
+      if (review.password().equals(passwordField.getText())) {
+        review.modifyAuthor(authorField.getText());
+        review.modifyTitle(titleField.getText());
+        review.modifyText(contentArea.getText());
 
-      detailsFrame.setVisible(false);
+        detailsFrame.setVisible(false);
+      }
+
+      displayWarningMessage();
     });
 
     detailsPanel.add(modifyButton);
+  }
+
+  public void displayWarningMessage() {
+    if (!review.password().equals(passwordField.getText())) {
+      JFrame warningFrame = new JFrame("Warning");
+      warningFrame.setLayout(new GridLayout(2, 1));
+      warningFrame.setSize(200, 100);
+      warningFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+      warningFrame.setVisible(true);
+
+      JLabel messageLabel = new JLabel("비밀번호를 확인하세요");
+      warningFrame.add(messageLabel);
+
+      JButton button = new JButton("확인");
+      button.addActionListener(event2 -> {
+        warningFrame.setVisible(false);
+      });
+      warningFrame.add(button);
+    }
   }
 }
