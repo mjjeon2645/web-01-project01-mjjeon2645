@@ -1,5 +1,6 @@
 package panels;
 
+import applications.BookReview;
 import models.Review;
 
 import javax.swing.*;
@@ -10,17 +11,12 @@ import java.util.List;
 
 public class ReviewsPanel extends JPanel {
   private final List<Review> reviews;
+  private BookReview bookReview;
 
   public ReviewsPanel(List<Review> reviews) {
     this.reviews = reviews;
 
     this.setLayout(new GridLayout(0, 2));
-
-    JLabel column1 = new JLabel("작성자");
-    this.add(column1);
-
-    JLabel column2 = new JLabel("글 제목");
-    this.add(column2);
 
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY)) {
@@ -38,10 +34,4 @@ public class ReviewsPanel extends JPanel {
       }
     }
   }
-
-//  public void refresh() {
-//    this.removeAll();
-//    this.setVisible(false);
-//    this.setVisible(true);
-//  }
 }
