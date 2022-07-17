@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.util.List;
 
 public class ReviewPanel extends JPanel {
@@ -16,16 +17,28 @@ public class ReviewPanel extends JPanel {
     this.review = review;
     this.reviews = reviews;
 
-    JPanel imagePanel = new JPanel();
+    this.setLayout(new GridLayout(1, 2));
 
-    ImageIcon icon = new ImageIcon("/resources/book.png");
+    JLabel imageLabel = new JLabel();
 
-    Image image = icon.getImage();
+    String address = "https://upload.wikimedia.org/wikipedia/commons/3/3a/Book-icon-bible.png";
+    try{
+      imageLabel.setIcon(new ImageIcon((new URL(address))));
+    }catch(Exception ex) {}
+//    setLayout(null);
 
-    Image updateImg = updateImg.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    imageLabel.setBounds(30, 30, 30, 30);
+    this.add(imageLabel);
+    imageLabel.setVisible(true);
+    this.setVisible(true);
+//    ImageIcon icon = new ImageIcon("/resources/book.png");
+//
+//    Image image = icon.getImage();
+//
+//    Image updateImg = updateImg.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 
-    JLabel authorLabel = new JLabel(review.author());
-    this.add(authorLabel);
+
+    JPanel titleAndAuthor = new JPanel();
 
     JLabel reviewTitleLabel = new JLabel(review.title());
     reviewTitleLabel.addMouseListener(new MouseAdapter() {
@@ -34,6 +47,10 @@ public class ReviewPanel extends JPanel {
         DetailsPopUp detailsPopUp = new DetailsPopUp(reviews, review);
       }
     });
-    this.add(reviewTitleLabel);
+    this.add(titleAndAuthor);
+
+    JLabel authorLabel = new JLabel(review.author());
+    this.add(authorLabel);
+
   }
 }
