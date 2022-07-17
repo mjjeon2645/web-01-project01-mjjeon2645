@@ -23,7 +23,7 @@ public class ReviewsPanel extends JPanel {
     this.add(column2);
 
     for (Review review : reviews) {
-      if (review.state().equals("DISPLAY")) {
+      if (review.state().equals(Review.DISPLAY)) {
         JLabel authorLabel = new JLabel(review.author());
         this.add(authorLabel);
 
@@ -39,15 +39,9 @@ public class ReviewsPanel extends JPanel {
     }
   }
 
-  public void refresh() {
-    this.removeAll();
-    this.revalidate();
-  }
-
-//TODO. 확인 필요 영역
-//  public void updatePanel() {
-//    this.removeAll();  // revalidate이랑 동시에 가능?
-//
-//    this.revalidate();
+//  public void refresh() {
+//    this.removeAll();
+//    this.setVisible(false);
+//    this.setVisible(true);
 //  }
 }

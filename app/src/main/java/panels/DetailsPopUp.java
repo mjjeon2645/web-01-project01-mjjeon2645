@@ -1,8 +1,10 @@
 package panels;
 
 import models.Review;
+import utils.ReviewsLoader;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 
 public class DetailsPopUp extends JPanel {
@@ -13,7 +15,6 @@ public class DetailsPopUp extends JPanel {
   private JTextField authorField;
   private JTextField titleField;
   private JTextArea contentArea;
-  private ReviewsPanel reviewsPanel;
 
   public DetailsPopUp(List<Review> reviews, Review review) {
     this.reviews = reviews;
@@ -47,7 +48,6 @@ public class DetailsPopUp extends JPanel {
 
     authorField = new JTextField(20);
     authorField.setText(review.author());
-    authorField.setEditable(false);
     authorField.setBounds(110, 30, 150, 30);
     detailsPanel.add(authorField);
   }
@@ -76,8 +76,14 @@ public class DetailsPopUp extends JPanel {
     deleteButton.addActionListener(event -> {
       review.deleted();
 
-      reviewsPanel = new ReviewsPanel(reviews);
-      reviewsPanel.refresh();
+      ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+
+      ReviewsLoader reviewsLoader = new ReviewsLoader();
+      try {
+        reviewsLoader.save(reviews);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
 
       detailsFrame.setVisible(false);
     });
@@ -89,11 +95,13 @@ public class DetailsPopUp extends JPanel {
     JButton modifyButton = new JButton("수정하기");
     modifyButton.setBounds(385, 420, 70, 35);
     modifyButton.addActionListener(event -> {
+      review.modifyAuthor(authorField.getText());
       review.modifyTitle(titleField.getText());
       review.modifyText(contentArea.getText());
+
+      detailsFrame.setVisible(false);
     });
 
     detailsPanel.add(modifyButton);
   }
 }
-

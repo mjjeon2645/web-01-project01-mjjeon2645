@@ -1,9 +1,11 @@
 package panels;
 
 import models.Review;
+import utils.ReviewsLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 public class WritePanel extends JPanel {
@@ -37,6 +39,13 @@ public class WritePanel extends JPanel {
 
       Review review = new Review(author, title, text);
       reviews.add(review);
+
+      ReviewsLoader reviewsLoader = new ReviewsLoader();
+      try {
+        reviewsLoader.save(reviews);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     });
 
     this.add(writeButton);

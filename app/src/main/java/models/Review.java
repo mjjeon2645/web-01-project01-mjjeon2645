@@ -3,8 +3,8 @@ package models;
 import java.util.Objects;
 
 public class Review {
-  private static final String DISPLAY = "DISPLAY";
-  private static final String DELETED = "DELETED";
+  public static final String DISPLAY = "DISPLAY";
+  public static final String DELETED = "DELETED";
 
   private String author;
   private String title;
@@ -39,6 +39,10 @@ public class Review {
 
   public String state() {
     return state;
+  }
+
+  public void modifyAuthor(String author) {
+    this.author = author;
   }
 
   public void modifyTitle(String title) {
