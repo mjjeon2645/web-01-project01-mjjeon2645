@@ -1,6 +1,5 @@
 package panels;
 
-import applications.BookReview;
 import models.Review;
 
 import javax.swing.*;
@@ -12,7 +11,6 @@ import java.util.List;
 
 public class WritePanel extends JPanel {
   private List<Review> reviews;
-  private ReviewsPanel reviewsPanel;
 
   public WritePanel(List<Review> reviews) throws FileNotFoundException {
     this.reviews = reviews;
@@ -60,6 +58,11 @@ public class WritePanel extends JPanel {
       if (!isBlank(author, password, title, text)) {
         Review review = new Review(author, password, title, text);
         reviews.add(review);
+
+        authorField.setText("");
+        passwordField.setText("");
+        titleField.setText("");
+        reviewTextArea.setText("");
       }
     });
     this.add(writeButton);

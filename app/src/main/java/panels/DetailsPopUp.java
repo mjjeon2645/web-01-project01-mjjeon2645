@@ -43,16 +43,6 @@ public class DetailsPopUp extends JPanel {
     detailsFrame.add(detailsPanel);
   }
 
-  public void initPasswordField() {
-    JLabel password = new JLabel("비밀번호");
-    password.setBounds(50, 70, 100, 30);
-    detailsPanel.add(password);
-
-    passwordField = new JTextField(4);
-    passwordField.setBounds(110, 70, 250, 30);
-    detailsPanel.add(passwordField);
-  }
-
   public void initAuthorField() {
     JLabel authorLabel = new JLabel("작성자");
     authorLabel.setBounds(50, 20, 50, 50);
@@ -63,6 +53,16 @@ public class DetailsPopUp extends JPanel {
     authorField.setEditable(false);
     authorField.setBounds(110, 30, 150, 30);
     detailsPanel.add(authorField);
+  }
+
+  public void initPasswordField() {
+    JLabel password = new JLabel("비밀번호");
+    password.setBounds(50, 70, 100, 30);
+    detailsPanel.add(password);
+
+    passwordField = new JTextField(4);
+    passwordField.setBounds(110, 70, 250, 30);
+    detailsPanel.add(passwordField);
   }
 
   public void initTitleField() {
