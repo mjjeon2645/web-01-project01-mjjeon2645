@@ -14,24 +14,36 @@ public class WritePanel extends JPanel {
 
   public WritePanel(List<Review> reviews) throws FileNotFoundException {
     this.reviews = reviews;
-    this.setLayout(new GridLayout(0, 1));
+    this.setLayout(new BorderLayout());
 
-    JLabel titleLabel = new JLabel("리뷰 쓰기");
-    this.add(titleLabel);
+    JPanel panel = new JPanel();
+    panel.setLayout(new GridLayout(3, 2, 10, 10));
+    this.add(panel, BorderLayout.PAGE_START);
+    panel.setVisible(true);
+
+    JLabel label = new JLabel("작성자명");
+    panel.add(label);
 
     JTextField authorField = new JTextField(15);
     authorField.setText("작성자명");
-    this.add(authorField);
+    authorField.setBounds(100, 100, 100, 100);
+    panel.add(authorField);
+
+    JLabel label1 = new JLabel("비밀번호");
+    panel.add(label1);
 
     JTextField passwordField = new JTextField(15);
     passwordField.setText("비밀번호");
-    this.add(passwordField);
+    panel.add(passwordField);
+
+    JLabel label2 = new JLabel("제목");
+    panel.add(label2);
 
     JTextField titleField = new JTextField(15);
     titleField.setText("제목");
-    this.add(titleField);
+    panel.add(titleField);
 
-    JTextArea reviewTextArea = new JTextArea(1, 30);
+    JTextArea reviewTextArea = new JTextArea(20, 20);
     reviewTextArea.setText("100자 이내로 리뷰를 적어주세요");
     reviewTextArea.setLineWrap(true);
     reviewTextArea.addKeyListener(new KeyAdapter() {
@@ -42,7 +54,7 @@ public class WritePanel extends JPanel {
         }
       }
     });
-    this.add(reviewTextArea);
+    this.add(reviewTextArea, BorderLayout.CENTER);
 
     JButton writeButton = new JButton("작성완료");
     writeButton.addActionListener(event -> {
@@ -65,7 +77,7 @@ public class WritePanel extends JPanel {
         reviewTextArea.setText("");
       }
     });
-    this.add(writeButton);
+    this.add(writeButton, BorderLayout.SOUTH);
 
     this.setVisible(true);
   }
