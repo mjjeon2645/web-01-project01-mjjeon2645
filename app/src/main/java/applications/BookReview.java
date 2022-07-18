@@ -89,6 +89,7 @@ public class BookReview {
 
   public JButton writeReview() {
     JButton button = new JButton("리뷰 쓰기");
+    // TODO. 이미지로 버튼 만들어보기
 //    button.setSize(30, 30);
 //    button.setBorderPainted(false);
 //    button.setFocusPainted(false);

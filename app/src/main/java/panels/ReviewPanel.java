@@ -44,7 +44,7 @@ public class ReviewPanel extends JPanel {
     imagePanel.setBackground(Color.orange);
     this.add(imagePanel);
 
-    JLabel noticeLabel = new JLabel("이미지 삽입 예정");
+    JLabel noticeLabel = new JLabel("+_+");
     imagePanel.add(noticeLabel);
 
     JPanel titleAndAuthor = new JPanel();
@@ -64,6 +64,5 @@ public class ReviewPanel extends JPanel {
 
     JLabel authorLabel = new JLabel(review.author());
     titleAndAuthor.add(authorLabel);
-
   }
 }
