@@ -3,6 +3,7 @@ package applications;
 import models.Review;
 import panels.ImagePanel;
 import panels.ReviewsPanel;
+import panels.SearchPanel;
 import panels.WritePanel;
 import utils.ReviewsLoader;
 
@@ -33,7 +34,7 @@ public class BookReview {
   }
 
   public void run() {
-    initFrame();
+    initFrameAndImage();
 
     initMenus();
 
@@ -42,7 +43,7 @@ public class BookReview {
     frame.setVisible(true);
   }
 
-  public void initFrame() {
+  public void initFrameAndImage() {
     frame = new JFrame("Book Review 100");
     frame.setSize(780, 554);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,6 +72,7 @@ public class BookReview {
 
     menuPanel.add(displayReviewsMenu());
     menuPanel.add(writeReviewMenu());
+    menuPanel.add(searchMenu());
   }
 
   public JButton displayReviewsMenu() {
@@ -99,10 +101,26 @@ public class BookReview {
     return button;
   }
 
+  public JButton searchMenu() {
+    JButton button = new JButton("리뷰 검색하기");
+    button.addActionListener(event -> {
+      SearchPanel searchPanel = new SearchPanel(reviews);
+
+      showContentPanel(searchPanel);
+    });
+
+    return button;
+  }
+
   public void initContentPanel() {
     contentPanel = new JPanel();
     contentPanel.setOpaque(false);
     imagePanel.add(contentPanel, BorderLayout.CENTER);
+
+    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+    reviewsPanel.setOpaque(false);
+    contentPanel.add(reviewsPanel);
+
     frame.setVisible(true);
   }
 

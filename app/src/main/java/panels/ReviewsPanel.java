@@ -13,6 +13,7 @@ public class ReviewsPanel extends JPanel {
     this.reviews = reviews;
 
     this.setLayout(new GridLayout(0, 1, 10, 10));
+    this.setOpaque(false);
 
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY)) {
