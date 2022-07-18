@@ -89,6 +89,10 @@ public class BookReview {
 
   public JButton writeReview() {
     JButton button = new JButton("리뷰 쓰기");
+//    button.setSize(30, 30);
+//    button.setBorderPainted(false);
+//    button.setFocusPainted(false);
+//    button.setContentAreaFilled(false);
     button.addActionListener(event -> {
       WritePanel writePanel = null;
       try {
@@ -98,7 +102,7 @@ public class BookReview {
       }
       showContentPanel(writePanel);
     });
-
+//    button.setVisible(true);
     return button;
   }
 

@@ -12,7 +12,7 @@ public class ReviewsPanel extends JPanel {
   public ReviewsPanel(List<Review> reviews) {
     this.reviews = reviews;
 
-    this.setLayout(new GridLayout(0, 1));
+    this.setLayout(new GridLayout(0, 1, 10, 10));
 
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY)) {
