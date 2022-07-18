@@ -1,6 +1,7 @@
 package applications;
 
 import models.Review;
+import panels.ImagePanel;
 import panels.ReviewsPanel;
 import panels.WritePanel;
 import utils.ReviewsLoader;
@@ -19,6 +20,7 @@ public class BookReview {
   private JFrame frame;
   private JPanel menuPanel;
   private JPanel contentPanel;
+  private ImagePanel imagePanel;
 
   public static void main(String[] args) throws FileNotFoundException {
     BookReview application = new BookReview();
@@ -33,15 +35,16 @@ public class BookReview {
   public void run() {
     initFrame();
 
-    initDisplayMenu();
-
-    initWriteMenu();
+    initMenus();
 
     initContentPanel();
+
+    frame.setVisible(true);
   }
 
   public void initFrame() {
     frame = new JFrame("Book Review 100");
+    frame.setSize(780, 554);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.addWindowListener(new WindowAdapter() {
       @Override
@@ -55,18 +58,22 @@ public class BookReview {
       }
     });
 
-    frame.setSize(400, 600);
+    imagePanel = new ImagePanel("test.png");
+    imagePanel.setLayout(new BorderLayout());
+    frame.add(imagePanel);
     frame.setVisible(true);
   }
 
-  public void initDisplayMenu() {
+  public void initMenus() {
     menuPanel = new JPanel();
-    frame.add(menuPanel, BorderLayout.PAGE_START);
+    imagePanel.add(menuPanel, BorderLayout.PAGE_START);
+    menuPanel.setOpaque(false);
 
-    menuPanel.add(displayReviews());
+    menuPanel.add(displayReviewsMenu());
+    menuPanel.add(writeReviewMenu());
   }
 
-  public JButton displayReviews() {
+  public JButton displayReviewsMenu() {
     JButton button = new JButton("100글자 북 리뷰");
     button.addActionListener(event -> {
       ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
@@ -77,23 +84,8 @@ public class BookReview {
     return button;
   }
 
-  public void initWriteMenu() {
-    JPanel writeMenuPanel = new JPanel();
-    writeMenuPanel.setLayout(new BorderLayout());
-    frame.add(writeMenuPanel, BorderLayout.SOUTH);
-
-    JPanel buttonLayoutPanel = new JPanel();
-    writeMenuPanel.add(buttonLayoutPanel);
-    writeMenuPanel.add(writeReview(), BorderLayout.EAST);
-  }
-
-  public JButton writeReview() {
+  public JButton writeReviewMenu() {
     JButton button = new JButton("리뷰 쓰기");
-    // TODO. 이미지로 버튼 만들어보기
-//    button.setSize(30, 30);
-//    button.setBorderPainted(false);
-//    button.setFocusPainted(false);
-//    button.setContentAreaFilled(false);
     button.addActionListener(event -> {
       WritePanel writePanel = null;
       try {
@@ -103,13 +95,15 @@ public class BookReview {
       }
       showContentPanel(writePanel);
     });
-//    button.setVisible(true);
+
     return button;
   }
 
   public void initContentPanel() {
     contentPanel = new JPanel();
-    frame.add(contentPanel, BorderLayout.CENTER);
+    contentPanel.setOpaque(false);
+    imagePanel.add(contentPanel, BorderLayout.CENTER);
+    frame.setVisible(true);
   }
 
   public void showContentPanel(JPanel panel) {
