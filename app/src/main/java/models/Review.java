@@ -14,6 +14,7 @@ public class Review {
   private String password;
   private String title;
   private String text;
+  private int count;
   private String state;
 
   public Review(String author, String password, String title, String text) {
@@ -21,14 +22,16 @@ public class Review {
     this.password = password;
     this.title = title;
     this.text = text;
+    this.count = 0;
     this.state = DISPLAY;
   }
 
-  public Review(String author, String password, String title, String text, String state) {
+  public Review(String author, String password, String title, String text, int count, String state) {
     this.author = author;
     this.password = password;
     this.title = title;
     this.text = text;
+    this.count = count;
     this.state = state;
   }
 
@@ -48,6 +51,10 @@ public class Review {
     return text;
   }
 
+  public int count() {
+    return count;
+  }
+
   public String state() {
     return state;
   }
@@ -64,12 +71,16 @@ public class Review {
     this.text = text;
   }
 
+  public void plusCount() {
+    this.count += 1;
+  }
+
   public void deleted() {
     this.state = DELETED;
   }
 
   public String toCsvRow() {
-    return String.join(",", author, password, title, text, state);
+    return String.join(",", author, password, title, text, Integer.toString(count), state);
   }
 
   @Override
@@ -84,6 +95,7 @@ public class Review {
         && Objects.equals(this.password, otherReview.password)
         && Objects.equals(this.title, otherReview.title)
         && Objects.equals(this.text, otherReview.text)
+        && Objects.equals(this.count, otherReview.count)
         && Objects.equals(this.state, otherReview.state);
   }
 }

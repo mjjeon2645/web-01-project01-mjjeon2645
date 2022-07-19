@@ -1,6 +1,9 @@
-package panels;
+package popups;
 
+import frames.WarningMessageFrame;
 import models.Review;
+import panels.ReviewPanel;
+import panels.ReviewsPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -94,7 +97,10 @@ public class DetailsPopUp extends JPanel {
         refreshReviewsPanel(reviews);
       }
 
-      displayWarningMessage();
+      if (!review.password().equals(passwordField.getText())) {
+        String message = "비밀번호를 확인하세요!";
+        WarningMessageFrame warningFrame = new WarningMessageFrame(message);
+      }
     });
 
     detailsPanel.add(deleteButton);
@@ -113,30 +119,13 @@ public class DetailsPopUp extends JPanel {
 
         refreshReviewsPanel(reviews);
       }
-
-      displayWarningMessage();
+      if (!review.password().equals(passwordField.getText())) {
+        String message = "비밀번호를 확인하세요!";
+        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
+      }
     });
 
     detailsPanel.add(modifyButton);
-  }
-
-  public void displayWarningMessage() {
-    if (!review.password().equals(passwordField.getText())) {
-      JFrame warningFrame = new JFrame("Warning");
-      warningFrame.setLayout(new GridLayout(2, 1));
-      warningFrame.setSize(200, 100);
-      warningFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      warningFrame.setVisible(true);
-
-      JLabel messageLabel = new JLabel("비밀번호를 확인하세요");
-      warningFrame.add(messageLabel);
-
-      JButton button = new JButton("확인");
-      button.addActionListener(event2 -> {
-        warningFrame.setVisible(false);
-      });
-      warningFrame.add(button);
-    }
   }
 
   public void refreshReviewsPanel(List<Review> reviews) {
@@ -152,7 +141,7 @@ public class DetailsPopUp extends JPanel {
         reviewsPanel.add(reviewPanel);
       }
     }
-
+// TODO: 문제 해결해야 함
 //    contentPanel.add(reviewsPanel);
 
     reviewsPanel.setVisible(false);
