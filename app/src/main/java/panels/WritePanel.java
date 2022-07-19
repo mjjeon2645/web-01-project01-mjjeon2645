@@ -75,6 +75,8 @@ public class WritePanel extends JPanel {
         passwordField.setText("");
         titleField.setText("");
         reviewTextArea.setText("");
+
+        refreshReviewsPanel(reviews);
       }
     });
     this.add(writeButton, BorderLayout.SOUTH);
@@ -102,5 +104,27 @@ public class WritePanel extends JPanel {
       warningFrame.setVisible(false);
     });
     warningFrame.add(button);
+  }
+
+  public void refreshReviewsPanel(List<Review> reviews) {
+    this.removeAll();
+
+    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+
+    reviewsPanel.removeAll();
+    reviewsPanel.setLayout(new GridLayout(0, 1, 10, 10));
+    reviewsPanel.setOpaque(false);
+
+    for (Review review : reviews) {
+      if (review.state().equals(Review.DISPLAY)) {
+        ReviewPanel reviewPanel = new ReviewPanel(review, reviews);
+        reviewsPanel.add(reviewPanel);
+      }
+    }
+
+    this.add(reviewsPanel);
+
+    reviewsPanel.setVisible(false);
+    reviewsPanel.setVisible(true);
   }
 }

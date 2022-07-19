@@ -90,6 +90,8 @@ public class DetailsPopUp extends JPanel {
       if (review.password().equals(passwordField.getText())) {
         review.deleted();
         detailsFrame.setVisible(false);
+
+        refreshReviewsPanel(reviews);
       }
 
       displayWarningMessage();
@@ -108,6 +110,8 @@ public class DetailsPopUp extends JPanel {
         review.modifyText(contentArea.getText());
 
         detailsFrame.setVisible(false);
+
+        refreshReviewsPanel(reviews);
       }
 
       displayWarningMessage();
@@ -133,5 +137,25 @@ public class DetailsPopUp extends JPanel {
       });
       warningFrame.add(button);
     }
+  }
+
+  public void refreshReviewsPanel(List<Review> reviews) {
+    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+
+    reviewsPanel.removeAll();
+    reviewsPanel.setLayout(new GridLayout(0, 1, 10, 10));
+    reviewsPanel.setOpaque(false);
+
+    for (Review review : reviews) {
+      if (review.state().equals(Review.DISPLAY)) {
+        ReviewPanel reviewPanel = new ReviewPanel(review, reviews);
+        reviewsPanel.add(reviewPanel);
+      }
+    }
+
+//    contentPanel.add(reviewsPanel);
+
+    reviewsPanel.setVisible(false);
+    reviewsPanel.setVisible(true);
   }
 }

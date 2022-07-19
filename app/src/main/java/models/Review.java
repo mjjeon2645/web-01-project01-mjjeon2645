@@ -6,6 +6,10 @@ public class Review {
   public static final String DISPLAY = "DISPLAY";
   public static final String DELETED = "DELETED";
 
+  public static final String AUTHOR = "작성자";
+  public static final String TITLE = "제목";
+  public static final String TEXT = "내용";
+
   private String author;
   private String password;
   private String title;
