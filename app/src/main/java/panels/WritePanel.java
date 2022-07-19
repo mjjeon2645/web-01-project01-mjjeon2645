@@ -118,9 +118,12 @@ public class WritePanel extends JPanel {
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY)) {
         ReviewPanel reviewPanel = new ReviewPanel(review, reviews);
-        this.add(reviewPanel);
+        reviewsPanel.add(reviewPanel);
       }
     }
+
+    this.add(reviewsPanel);
+
     reviewsPanel.setVisible(false);
     reviewsPanel.setVisible(true);
   }
