@@ -22,4 +22,6 @@ public class ReviewsPanel extends JPanel {
       }
     }
   }
+
+  //TODO: 리뷰 패널을 리프레시하는 것을 여기서 해줄순 없을까?
 }

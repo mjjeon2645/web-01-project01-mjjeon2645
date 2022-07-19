@@ -1,5 +1,6 @@
 package panels;
 
+import frames.WarningMessageFrame;
 import models.Review;
 
 import javax.swing.*;
@@ -33,32 +34,22 @@ public class SearchPanel extends JPanel {
     searchButton.addActionListener(event -> {
       String text = searchField.getText();
       if (text.isBlank()) {
-        JFrame warningFrame = new JFrame("Warning");
-        warningFrame.setLayout(new GridLayout(2, 1));
-        warningFrame.setSize(200, 100);
-        warningFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        warningFrame.setVisible(true);
-
-        JLabel messageLabel = new JLabel("모든 항목을 빠짐없이 입력하세요!");
-        warningFrame.add(messageLabel);
-
-        JButton button = new JButton("확인");
-        button.addActionListener(event2 -> {
-          warningFrame.setVisible(false);
-        });
-        warningFrame.add(button);
+        String message = "검색어를 입력하세요!";
+        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
       }
 
       if (!text.isBlank()) {
-        if (comboBox.getSelectedItem().equals(Review.AUTHOR)) {
+        String selection = String.valueOf(comboBox.getSelectedItem());
+
+        if (selection.equals(Review.AUTHOR)) {
           searchReviewsWithAuthorKeyword(reviews, text);
         }
 
-        if (comboBox.getSelectedItem().equals(Review.TITLE)) {
+        if (selection.equals(Review.TITLE)) {
           searchReviewsWithTitleKeyword(reviews, text);
         }
 
-        if (comboBox.getSelectedItem().equals(Review.TEXT)) {
+        if (selection.equals(Review.TEXT)) {
           searchReviewsWithTextKeyword(reviews, text);
         }
       }

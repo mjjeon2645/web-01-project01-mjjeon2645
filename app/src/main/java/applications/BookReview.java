@@ -59,7 +59,7 @@ public class BookReview {
       }
     });
 
-    imagePanel = new ImagePanel("test.png");
+    imagePanel = new ImagePanel("background.png");
     imagePanel.setLayout(new BorderLayout());
     frame.add(imagePanel);
     frame.setVisible(true);
@@ -73,6 +73,7 @@ public class BookReview {
     menuPanel.add(displayReviewsMenu());
     menuPanel.add(writeReviewMenu());
     menuPanel.add(searchMenu());
+    frame.setVisible(true);
   }
 
   public JButton displayReviewsMenu() {

@@ -1,5 +1,6 @@
 package panels;
 
+import frames.WarningMessageFrame;
 import models.Review;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class WritePanel extends JPanel {
 
   public WritePanel(List<Review> reviews) throws FileNotFoundException {
     this.reviews = reviews;
+    this.setOpaque(false);
     this.setLayout(new BorderLayout());
 
     JPanel panel = new JPanel();
@@ -57,6 +59,7 @@ public class WritePanel extends JPanel {
     this.add(reviewTextArea, BorderLayout.CENTER);
 
     JButton writeButton = new JButton("작성완료");
+    writeButton.setMargin(new Insets(10, 10, 10, 10));
     writeButton.addActionListener(event -> {
       String author = authorField.getText();
       String password = passwordField.getText();
@@ -64,7 +67,8 @@ public class WritePanel extends JPanel {
       String text = reviewTextArea.getText();
 
       if (isBlank(author, password, title, text)) {
-        displayWarningMessage();
+        String message = "모든 항목을 빠짐없이 입력하세요!";
+        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
       }
 
       if (!isBlank(author, password, title, text)) {
@@ -87,23 +91,6 @@ public class WritePanel extends JPanel {
   public boolean isBlank(String author, String password, String title, String text) {
     return author.isBlank() || password.isBlank()
         || title.isBlank() || text.isBlank();
-  }
-
-  public void displayWarningMessage() {
-    JFrame warningFrame = new JFrame("Warning!");
-    warningFrame.setLayout(new GridLayout(2, 1));
-    warningFrame.setSize(200, 100);
-    warningFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    warningFrame.setVisible(true);
-
-    JLabel messageLabel = new JLabel("모든 항목을 빠짐없이 입력하세요!");
-    warningFrame.add(messageLabel);
-
-    JButton button = new JButton("확인");
-    button.addActionListener(event2 -> {
-      warningFrame.setVisible(false);
-    });
-    warningFrame.add(button);
   }
 
   public void refreshReviewsPanel(List<Review> reviews) {

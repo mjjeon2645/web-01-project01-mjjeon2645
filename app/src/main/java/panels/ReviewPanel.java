@@ -1,13 +1,13 @@
 package panels;
 
 import models.Review;
+import popups.DetailsPopUp;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 import java.util.List;
 
 public class ReviewPanel extends JPanel {
@@ -21,36 +21,15 @@ public class ReviewPanel extends JPanel {
 
     this.setLayout(new GridLayout(1, 2));
 
-    // TODO. 이미지화 하여 각 리스트를 보여주고 싶음
-//    JLabel imageLabel = new JLabel();
-//
-//    String address = "https://upload.wikimedia.org/wikipedia/commons/3/3a/Book-icon-bible.png";
-//    try{
-//      imageLabel.setIcon(new ImageIcon((new URL(address))));
-//    }catch(Exception ex) {}
-////    setLayout(null);
-//
-//    imageLabel.setBounds(30, 30, 30, 30);
-//    this.add(imageLabel);
-//    imageLabel.setVisible(true);
-//    this.setVisible(true);
-//    ImageIcon icon = new ImageIcon("/resources/book.png");
-//
-//    Image image = icon.getImage();
-//
-//    Image updateImg = updateImg.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    JPanel panel = new JPanel();
+    this.add(panel);
 
-    JPanel imagePanel = new JPanel();
-    imagePanel.setBackground(Color.orange);
-    this.add(imagePanel);
+    ImagePanel imagePanel = new ImagePanel("book2.png");
+    panel.add(imagePanel);
 
-    JLabel noticeLabel = new JLabel("+_+");
-    imagePanel.add(noticeLabel);
-
-    JPanel titleAndAuthor = new JPanel();
-    titleAndAuthor.setLayout(new GridLayout(2, 1, 0, 10));
-    titleAndAuthor.setBackground(Color.white);
-    this.add(titleAndAuthor);
+    JPanel containerPanel = new JPanel();
+    containerPanel.setLayout(new GridLayout(3, 1, 0, 5));
+    this.add(containerPanel);
 
     JLabel reviewTitleLabel = new JLabel(review.title());
     reviewTitleLabel.setFont(new Font("Verdada", Font.BOLD, 14));
@@ -58,11 +37,15 @@ public class ReviewPanel extends JPanel {
       @Override
       public void mouseClicked(MouseEvent e) {
         DetailsPopUp detailsPopUp = new DetailsPopUp(reviews, review);
+        review.plusCount();
       }
     });
-    titleAndAuthor.add(reviewTitleLabel);
+    containerPanel.add(reviewTitleLabel);
 
     JLabel authorLabel = new JLabel(review.author());
-    titleAndAuthor.add(authorLabel);
+    containerPanel.add(authorLabel);
+
+    JLabel countLabel = new JLabel("조회수: " + review.count());
+    containerPanel.add(countLabel);
   }
 }

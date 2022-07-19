@@ -16,11 +16,8 @@ class ReviewTest {
 
   @Test
   void toCsvRow() {
-    Review review = new Review(
-        "봄이",
-        "객체 지향",
-        "사실과 오해", "DISPLAY");
+    Review review = new Review("봄이", "1234", "객체 지향", "사실과 오해", 1, "DISPLAY");
 
-    assertEquals("봄이,객체 지향,사실과 오해,DISPLAY", review.toCsvRow());
+    assertEquals("봄이,1234,객체 지향,사실과 오해,1,DISPLAY", review.toCsvRow());
   }
 }
