@@ -38,6 +38,7 @@ public class SearchPanel extends JPanel {
         WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
       }
 
+      // TODO. 여기 중복 해결해줄 수는 없을까?
       if (!text.isBlank()) {
         String selection = String.valueOf(comboBox.getSelectedItem());
 

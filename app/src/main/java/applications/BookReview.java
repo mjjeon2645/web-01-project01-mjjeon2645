@@ -1,10 +1,7 @@
 package applications;
 
 import models.Review;
-import panels.ImagePanel;
-import panels.ReviewsPanel;
-import panels.SearchPanel;
-import panels.WritePanel;
+import panels.*;
 import utils.ReviewsLoader;
 
 import javax.swing.*;
@@ -73,14 +70,16 @@ public class BookReview {
     menuPanel.add(displayReviewsMenu());
     menuPanel.add(writeReviewMenu());
     menuPanel.add(searchMenu());
+    menuPanel.add(recommendMenu());
     frame.setVisible(true);
   }
 
   public JButton displayReviewsMenu() {
     JButton button = new JButton("100글자 북 리뷰");
+    button.setBackground(Color.WHITE);
+    button.setPreferredSize(new Dimension(130, 45));
     button.addActionListener(event -> {
       ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
-
       showContentPanel(reviewsPanel);
     });
 
@@ -89,6 +88,8 @@ public class BookReview {
 
   public JButton writeReviewMenu() {
     JButton button = new JButton("리뷰 쓰기");
+    button.setBackground(Color.WHITE);
+    button.setPreferredSize(new Dimension(130, 45));
     button.addActionListener(event -> {
       WritePanel writePanel = null;
       try {
@@ -104,10 +105,23 @@ public class BookReview {
 
   public JButton searchMenu() {
     JButton button = new JButton("리뷰 검색하기");
+    button.setBackground(Color.WHITE);
+    button.setPreferredSize(new Dimension(130, 45));
     button.addActionListener(event -> {
       SearchPanel searchPanel = new SearchPanel(reviews);
-
       showContentPanel(searchPanel);
+    });
+
+    return button;
+  }
+
+  public JButton recommendMenu() {
+    JButton button = new JButton("오늘의 추천 책");
+    button.setBackground(Color.WHITE);
+    button.setPreferredSize(new Dimension(130, 45));
+    button.addActionListener(event -> {
+      SelectCategoryPanel selectCategoryPanel = new SelectCategoryPanel();
+      showContentPanel(selectCategoryPanel);
     });
 
     return button;

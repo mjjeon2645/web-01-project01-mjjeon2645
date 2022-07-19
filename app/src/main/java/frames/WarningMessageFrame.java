@@ -7,7 +7,7 @@ public class WarningMessageFrame extends JFrame {
   public WarningMessageFrame(String message) {
     this.setTitle("warning");
     this.setLayout(new GridLayout(2, 1));
-    this.setSize(200, 100);
+    this.setSize(250, 130);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setVisible(true);
 
