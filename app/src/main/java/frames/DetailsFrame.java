@@ -1,4 +1,4 @@
-package popups;
+package frames;
 
 import frames.WarningMessageFrame;
 import models.Review;
@@ -9,8 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class DetailsPopUp extends JPanel {
-  private final JFrame detailsFrame;
+public class DetailsFrame extends JFrame {
   private final JPanel detailsPanel;
   private List<Review> reviews;
   private Review review;
@@ -19,14 +18,14 @@ public class DetailsPopUp extends JPanel {
   private JTextArea contentArea;
   private JTextField passwordField;
 
-  public DetailsPopUp(List<Review> reviews, Review review) {
+  public DetailsFrame(List<Review> reviews, Review review) {
     this.reviews = reviews;
     this.review = review;
 
-    detailsFrame = new JFrame("상세보기");
-    detailsFrame.setSize(500, 500);
-    detailsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    detailsFrame.setVisible(true);
+    this.setTitle("상세보기");
+    this.setSize(500, 500);
+    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    this.setVisible(true);
 
     detailsPanel = new JPanel();
     detailsPanel.setLayout(null);
@@ -43,7 +42,7 @@ public class DetailsPopUp extends JPanel {
 
     initModifyButton();
 
-    detailsFrame.add(detailsPanel);
+    this.add(detailsPanel);
   }
 
   public void initAuthorField() {
@@ -92,7 +91,7 @@ public class DetailsPopUp extends JPanel {
     deleteButton.addActionListener(event -> {
       if (review.password().equals(passwordField.getText())) {
         review.deleted();
-        detailsFrame.setVisible(false);
+        this.setVisible(false);
 
         refreshReviewsPanel(reviews);
       }
@@ -115,7 +114,7 @@ public class DetailsPopUp extends JPanel {
         review.modifyTitle(titleField.getText());
         review.modifyText(contentArea.getText());
 
-        detailsFrame.setVisible(false);
+        this.setVisible(false);
 
         refreshReviewsPanel(reviews);
       }

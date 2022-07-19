@@ -1,7 +1,7 @@
 package panels;
 
 import models.Review;
-import popups.DetailsPopUp;
+import frames.DetailsFrame;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -36,7 +36,7 @@ public class ReviewPanel extends JPanel {
     reviewTitleLabel.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        DetailsPopUp detailsPopUp = new DetailsPopUp(reviews, review);
+        DetailsFrame detailsPopUp = new DetailsFrame(reviews, review);
         review.plusCount();
       }
     });
