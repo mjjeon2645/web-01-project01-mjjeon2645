@@ -56,7 +56,7 @@ public class BookReview {
       }
     });
 
-    imagePanel = new ImagePanel("background.png");
+    imagePanel = new ImagePanel("images/background.png");
     imagePanel.setLayout(new BorderLayout());
     frame.add(imagePanel);
     frame.setVisible(true);
@@ -72,6 +72,19 @@ public class BookReview {
     menuPanel.add(searchMenu());
     menuPanel.add(recommendMenu());
     frame.setVisible(true);
+
+//   프레임 자동갱신 기능(팝업을 띄웠을 때)
+//    frame.addWindowListener(new WindowAdapter() {
+//      @Override
+//      public void windowActivated(WindowEvent e) {
+//        super.windowActivated(e);
+//
+//        // what panel ? ... int selectedMenu = 0;
+//        ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+//        showContentPanel(reviewsPanel);
+//      }
+//    });
+    ///////
   }
 
   public JButton displayReviewsMenu() {

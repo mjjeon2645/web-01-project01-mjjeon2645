@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static models.Review.DELETED;
+import static models.Review.DISPLAY;
 import static org.junit.jupiter.api.Assertions.*;
 class ReviewsLoaderTest {
   @Test
