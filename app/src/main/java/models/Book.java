@@ -21,18 +21,16 @@ public class Book {
   public static final String HEALTH = "건강";
 
   private String imageRoot;
-  private String title;
+  private String bookTitle;
   private String bookAuthor;
-  private String introduce;
-  private String link;
+  private String url;
   private String category;
 
-  public Book(String imageRoot, String title, String bookAuthor, String introduce, String link, String category) {
+  public Book(String imageRoot, String bookTitle, String bookAuthor, String url, String category) {
     this.imageRoot = imageRoot;
-    this.title = title;
+    this.bookTitle = bookTitle;
     this.bookAuthor = bookAuthor;
-    this.introduce = introduce;
-    this.link = link;
+    this.url = url;
     this.category = category;
   }
 
@@ -40,20 +38,16 @@ public class Book {
     return imageRoot;
   }
 
-  public String title() {
-    return title;
+  public String bookTitle() {
+    return bookTitle;
   }
 
   public String bookAuthor() {
     return bookAuthor;
   }
 
-  public String introduce() {
-    return introduce;
-  }
-
-  public String link() {
-    return link;
+  public String url() {
+    return url;
   }
 
   public String category() {
@@ -69,10 +63,9 @@ public class Book {
   public boolean equals(Object other) {
     Book otherBook = (Book) other;
     return Objects.equals(this.imageRoot, otherBook.imageRoot)
-        && Objects.equals(this.title, otherBook.title)
+        && Objects.equals(this.bookTitle, otherBook.bookTitle)
         && Objects.equals(this.bookAuthor, otherBook.bookAuthor)
-        && Objects.equals(this.introduce, otherBook.introduce)
-        && Objects.equals(this.link, otherBook.link)
+        && Objects.equals(this.url, otherBook.url)
         && Objects.equals(this.category, otherBook.category);
   }
 }

@@ -60,7 +60,7 @@ public class RecommendedBookPanel extends JPanel {
 
     infoPanel.add(new JLabel("  "));
 
-    infoPanel.add(new JLabel("제목: " + testBook.title()));
+    infoPanel.add(new JLabel("제목: " + testBook.bookTitle()));
 
     infoPanel.add(new JLabel("저자: " + testBook.bookAuthor()));
   }
@@ -95,7 +95,7 @@ public class RecommendedBookPanel extends JPanel {
 
     infoPanel.add(new JLabel("  "));
 
-    infoPanel.add(new JLabel("제목: " + testBook.title()));
+    infoPanel.add(new JLabel("제목: " + testBook.bookTitle()));
 
     infoPanel.add(new JLabel("저자: " + testBook.bookAuthor()));
   }

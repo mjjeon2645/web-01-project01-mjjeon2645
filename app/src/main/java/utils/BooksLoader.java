@@ -29,6 +29,6 @@ public class BooksLoader {
   public Book parseBook(String text) {
     String[] words = text.split("///");
 
-    return new Book(words[0], words[1], words[2], words[3], words[4], words[5]);
+    return new Book(words[0], words[1], words[2], words[3], words[4]);
   }
 }
