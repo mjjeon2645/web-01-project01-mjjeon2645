@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
+import static java.awt.BorderLayout.CENTER;
+
 public class SelectCategoryPanel extends JPanel {
   private final JPanel choicePanel;
 
@@ -53,7 +55,7 @@ public class SelectCategoryPanel extends JPanel {
     choicePanel = new JPanel();
     choicePanel.setLayout(new GridLayout(6, 4, 30, 20));
     choicePanel.setOpaque(false);
-    this.add(choicePanel, BorderLayout.CENTER);
+    this.add(choicePanel, CENTER);
 
     choicePanel.add(new JLabel());
     choicePanel.add(new JLabel());
@@ -115,9 +117,25 @@ public class SelectCategoryPanel extends JPanel {
 
       if (accumulator == 1) {
         this.removeAll();
+
+        titlePanel.removeAll();
+
+        JLabel layoutLabel1 = new JLabel();
+        titlePanel.add(layoutLabel1);
+
+        JLabel recommendTitleLabel = new JLabel("당신에게 추천하는 책입니다!");
+        recommendTitleLabel.setFont(new Font("Verdada", Font.BOLD, 16));
+        recommendTitleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titlePanel.add(recommendTitleLabel);
+
+        JLabel layoutLabel2 = new JLabel();
+        titlePanel.add(layoutLabel2);
+
+        this.add(titlePanel, BorderLayout.PAGE_START);
+
         try {
           RecommendedBookPanel recommendedBookPanel = new RecommendedBookPanel();
-          this.add(recommendedBookPanel, BorderLayout.CENTER);
+          this.add(recommendedBookPanel, CENTER);
         } catch (FileNotFoundException e) {
           throw new RuntimeException(e);
         }
