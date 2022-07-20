@@ -98,7 +98,7 @@ public class DetailsFrame extends JFrame {
 
       if (!review.password().equals(passwordField.getText())) {
         String message = "비밀번호를 확인하세요!";
-        WarningMessageFrame warningFrame = new WarningMessageFrame(message);
+        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
       }
     });
 

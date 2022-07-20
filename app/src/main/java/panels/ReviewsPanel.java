@@ -21,11 +21,5 @@ public class ReviewsPanel extends JPanel {
       }
     }
   }
-
-  public void refreshPanel() {
-    this.setVisible(false);
-    this.setVisible(true);
-  }
-
   //TODO: 리뷰 패널을 리프레시하는 것을 여기서 해줄순 없을까?
 }
