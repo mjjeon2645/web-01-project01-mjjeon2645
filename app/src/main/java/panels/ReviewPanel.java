@@ -24,7 +24,7 @@ public class ReviewPanel extends JPanel {
     JPanel panel = new JPanel();
     this.add(panel);
 
-    ImagePanel imagePanel = new ImagePanel("book2.png");
+    ImagePanel imagePanel = new ImagePanel("images/book2.png");
     panel.add(imagePanel);
 
     JPanel containerPanel = new JPanel();

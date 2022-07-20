@@ -4,6 +4,7 @@ import frames.WarningMessageFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class SelectCategoryPanel extends JPanel {
   private final JPanel choicePanel;
@@ -18,7 +19,7 @@ public class SelectCategoryPanel extends JPanel {
   private JCheckBox moneyManagementCheckBox;
   private JCheckBox artsCultureCheckBox;
   private JCheckBox socialPoliticsCheckBox;
-  private JCheckBox scienceCheckBox;
+  private JCheckBox scienceITCheckBox;
   private JCheckBox travelCheckBox;
   private JCheckBox religionCheckBox;
   private JCheckBox lifeStyleCheckBox;
@@ -41,7 +42,7 @@ public class SelectCategoryPanel extends JPanel {
     titleLabel.setHorizontalAlignment(JLabel.CENTER);
     titlePanel.add(titleLabel);
 
-    JLabel subtitleLabel1 = new JLabel("관심분야 3개를 선택하시면");
+    JLabel subtitleLabel1 = new JLabel("관심분야 1개를 선택하시면");
     subtitleLabel1.setHorizontalAlignment(JLabel.CENTER);
     titlePanel.add(subtitleLabel1);
 
@@ -64,7 +65,7 @@ public class SelectCategoryPanel extends JPanel {
 //        {"소설\uD83D\uDE00", "에세이\uD83C\uDF31", "시\uD83D\uDCDC",
 //            "인문학\uD83D\uDC64", "자기계발\uD83E\uDD34", "경제/경영\uD83C\uDF93",
 //            "마케팅\uD83D\uDD76", "재테크\uD83D\uDCC8", "예술/문화\uD83C\uDF39",
-//            "사회/정치\uD83D\uDC40", "과학\uD83D\uDEF0", "여행\uD83D\uDEE9",
+//            "사회/정치\uD83D\uDC40", "과학/IT\uD83D\uDEF0", "여행\uD83D\uDEE9",
 //            "종교\uD83D\uDE4F", "라이프\uD83C\uDFD6", "결혼/육아\uD83D\uDC8D",
 //            "건강\uD83C\uDFD3"};
 //
@@ -82,7 +83,7 @@ public class SelectCategoryPanel extends JPanel {
     initMoneyManagementForm();
     initArtsCultureForm();
     initSocialPoliticsForm();
-    initScienceForm();
+    initScienceITForm();
     initTravelForm();
     initReligionForm();
     initLifeStyleForm();
@@ -103,13 +104,26 @@ public class SelectCategoryPanel extends JPanel {
           + count(selfDevelopmentCheckBox) + count(economicsBusinessCheckBox)
           + count(marketingCheckBox) + count(moneyManagementCheckBox)
           + count(artsCultureCheckBox) + count(socialPoliticsCheckBox)
-          + count(scienceCheckBox) + count(travelCheckBox)
+          + count(scienceITCheckBox) + count(travelCheckBox)
           + count(religionCheckBox) + count(lifeStyleCheckBox)
           + count(weddingChildcareCheckBox) + count(healthCheckBox);
 
-      if (accumulator != 3) {
+      if (accumulator != 1) {
         WarningMessageFrame warningMessageFrame
-            = new WarningMessageFrame("관심있는 카테고리 3개를 선택해주세요!");
+            = new WarningMessageFrame("관심있는 카테고리 1개를 선택해주세요!");
+      }
+
+      if (accumulator == 1) {
+        this.removeAll();
+        try {
+          RecommendedBookPanel recommendedBookPanel = new RecommendedBookPanel();
+          this.add(recommendedBookPanel, BorderLayout.CENTER);
+        } catch (FileNotFoundException e) {
+          throw new RuntimeException(e);
+        }
+
+        this.setVisible(false);
+        this.setVisible(true);
       }
     });
 
@@ -126,7 +140,8 @@ public class SelectCategoryPanel extends JPanel {
     novelCheckBox = new JCheckBox();
     novelPanel.add(novelCheckBox, BorderLayout.WEST);
 
-    JLabel novelLabel = new JLabel("소설\uD83D\uDE00");
+    String category = "소설\uD83D\uDE00";
+    JLabel novelLabel = new JLabel(category);
     novelLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     novelPanel.add(novelLabel);
   }
@@ -140,7 +155,8 @@ public class SelectCategoryPanel extends JPanel {
     essayCheckBox = new JCheckBox();
     essayPanel.add(essayCheckBox, BorderLayout.WEST);
 
-    JLabel essayLabel = new JLabel("에세이\uD83C\uDF31");
+    String category = "에세이\uD83C\uDF31";
+    JLabel essayLabel = new JLabel(category);
     essayLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     essayPanel.add(essayLabel);
   }
@@ -154,7 +170,8 @@ public class SelectCategoryPanel extends JPanel {
     poemCheckBox = new JCheckBox();
     poemPanel.add(poemCheckBox, BorderLayout.WEST);
 
-    JLabel poemLabel = new JLabel("시\uD83D\uDCDC");
+    String category = "시\uD83D\uDCDC";
+    JLabel poemLabel = new JLabel(category);
     poemLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     poemPanel.add(poemLabel);
   }
@@ -168,7 +185,8 @@ public class SelectCategoryPanel extends JPanel {
     humanitiesCheckBox = new JCheckBox();
     humanitiesPanel.add(humanitiesCheckBox, BorderLayout.WEST);
 
-    JLabel humanitiesLabel = new JLabel("인문학\uD83D\uDC64");
+    String category = "인문학\uD83D\uDC64";
+    JLabel humanitiesLabel = new JLabel(category);
     humanitiesLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     humanitiesPanel.add(humanitiesLabel);
   }
@@ -182,7 +200,8 @@ public class SelectCategoryPanel extends JPanel {
     selfDevelopmentCheckBox = new JCheckBox();
     selfDevelopmentPanel.add(selfDevelopmentCheckBox, BorderLayout.WEST);
 
-    JLabel selfDevelopmentLabel = new JLabel("자기계발\uD83E\uDD34");
+    String category = "자기계발\uD83E\uDD34";
+    JLabel selfDevelopmentLabel = new JLabel(category);
     selfDevelopmentLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     selfDevelopmentPanel.add(selfDevelopmentLabel);
   }
@@ -196,7 +215,8 @@ public class SelectCategoryPanel extends JPanel {
     economicsBusinessCheckBox = new JCheckBox();
     economicsBusinessPanel.add(economicsBusinessCheckBox, BorderLayout.WEST);
 
-    JLabel economicsBusinessLabel = new JLabel("경제/경영\uD83C\uDF93");
+    String category = "경제/경영\uD83C\uDF93";
+    JLabel economicsBusinessLabel = new JLabel(category);
     economicsBusinessLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     economicsBusinessPanel.add(economicsBusinessLabel);
   }
@@ -210,7 +230,8 @@ public class SelectCategoryPanel extends JPanel {
     marketingCheckBox = new JCheckBox();
     marketingPanel.add(marketingCheckBox, BorderLayout.WEST);
 
-    JLabel marketingLabel = new JLabel("마케팅\uD83D\uDD76");
+    String category = "마케팅\uD83D\uDD76";
+    JLabel marketingLabel = new JLabel(category);
     marketingLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     marketingPanel.add(marketingLabel);
   }
@@ -224,7 +245,8 @@ public class SelectCategoryPanel extends JPanel {
     moneyManagementCheckBox = new JCheckBox();
     moneyManagementPanel.add(moneyManagementCheckBox, BorderLayout.WEST);
 
-    JLabel moneyManagementLabel = new JLabel("재테크\uD83D\uDCC8");
+    String category = "재테크\uD83D\uDCC8";
+    JLabel moneyManagementLabel = new JLabel(category);
     moneyManagementLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     moneyManagementPanel.add(moneyManagementLabel);
   }
@@ -238,7 +260,8 @@ public class SelectCategoryPanel extends JPanel {
     artsCultureCheckBox = new JCheckBox();
     artsCulturePanel.add(artsCultureCheckBox, BorderLayout.WEST);
 
-    JLabel artsCultureLabel = new JLabel("예술/문화\uD83C\uDF39");
+    String category = "예술/문화\uD83C\uDF39";
+    JLabel artsCultureLabel = new JLabel(category);
     artsCultureLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     artsCulturePanel.add(artsCultureLabel);
   }
@@ -252,23 +275,25 @@ public class SelectCategoryPanel extends JPanel {
     socialPoliticsCheckBox = new JCheckBox();
     socialPoliticsPanel.add(socialPoliticsCheckBox, BorderLayout.WEST);
 
-    JLabel socialPoliticsLabel = new JLabel("사회/정치\uD83D\uDC40");
+    String category = "사회/정치\uD83D\uDC40";
+    JLabel socialPoliticsLabel = new JLabel(category);
     socialPoliticsLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     socialPoliticsPanel.add(socialPoliticsLabel);
   }
 
-  public void initScienceForm() {
-    JPanel sciencePanel = new JPanel();
-    sciencePanel.setLayout(new BorderLayout());
-    sciencePanel.setOpaque(false);
-    choicePanel.add(sciencePanel);
+  public void initScienceITForm() {
+    JPanel scienceITPanel = new JPanel();
+    scienceITPanel.setLayout(new BorderLayout());
+    scienceITPanel.setOpaque(false);
+    choicePanel.add(scienceITPanel);
 
-    scienceCheckBox = new JCheckBox();
-    sciencePanel.add(scienceCheckBox, BorderLayout.WEST);
+    scienceITCheckBox = new JCheckBox();
+    scienceITPanel.add(scienceITCheckBox, BorderLayout.WEST);
 
-    JLabel scienceLabel = new JLabel("과학\uD83D\uDEF0");
-    scienceLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
-    sciencePanel.add(scienceLabel);
+    String category = "과학/IT\uD83D\uDEF0";
+    JLabel scienceITLabel = new JLabel(category);
+    scienceITLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
+    scienceITPanel.add(scienceITLabel);
   }
 
   public void initTravelForm() {
@@ -280,7 +305,8 @@ public class SelectCategoryPanel extends JPanel {
     travelCheckBox = new JCheckBox();
     travelPanel.add(travelCheckBox, BorderLayout.WEST);
 
-    JLabel travelLabel = new JLabel("여행\uD83D\uDEE9");
+    String category = "여행\uD83D\uDEE9";
+    JLabel travelLabel = new JLabel(category);
     travelLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     travelPanel.add(travelLabel);
   }
@@ -294,7 +320,8 @@ public class SelectCategoryPanel extends JPanel {
     religionCheckBox = new JCheckBox();
     religionPanel.add(religionCheckBox, BorderLayout.WEST);
 
-    JLabel religionLabel = new JLabel("종교\uD83D\uDE4F");
+    String category = "종교\uD83D\uDE4F";
+    JLabel religionLabel = new JLabel(category);
     religionLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     religionPanel.add(religionLabel);
   }
@@ -308,7 +335,8 @@ public class SelectCategoryPanel extends JPanel {
     lifeStyleCheckBox = new JCheckBox();
     lifeStylePanel.add(lifeStyleCheckBox, BorderLayout.WEST);
 
-    JLabel lifeStyleLabel = new JLabel("라이프\uD83C\uDFD6");
+    String category = "라이프\uD83C\uDFD6";
+    JLabel lifeStyleLabel = new JLabel(category);
     lifeStyleLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     lifeStylePanel.add(lifeStyleLabel);
   }
@@ -322,7 +350,8 @@ public class SelectCategoryPanel extends JPanel {
     weddingChildcareCheckBox = new JCheckBox();
     weddingChildcarePanel.add(weddingChildcareCheckBox, BorderLayout.WEST);
 
-    JLabel weddingChildcareLabel = new JLabel("결혼/육아\uD83D\uDC8D");
+    String category = "결혼/육아\uD83D\uDC8D";
+    JLabel weddingChildcareLabel = new JLabel(category);
     weddingChildcareLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     weddingChildcarePanel.add(weddingChildcareLabel);
   }
@@ -336,7 +365,8 @@ public class SelectCategoryPanel extends JPanel {
     healthCheckBox = new JCheckBox();
     healthPanel.add(healthCheckBox, BorderLayout.WEST);
 
-    JLabel healthLabel = new JLabel("건강\uD83C\uDFD3");
+    String category = "건강\uD83C\uDFD3";
+    JLabel healthLabel = new JLabel(category);
     healthLabel.setFont(new Font("Verdada", Font.PLAIN, 14));
     healthPanel.add(healthLabel);
   }
