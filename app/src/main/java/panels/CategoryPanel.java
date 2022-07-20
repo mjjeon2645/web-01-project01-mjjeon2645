@@ -1,5 +1,3 @@
-//TODO. 아직 사용하지 않고 있으므로 추후 활용 필요
-
 package panels;
 
 import javax.swing.*;
@@ -22,7 +20,20 @@ public class CategoryPanel extends JPanel {
     this.add(label);
   }
 
-  public JCheckBox checkBox() {
-    return checkBox;
+  public int countSelectedCheckBox() {
+    if (checkBox.isSelected()) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  public String selectedCategory() {
+    if (checkBox.isSelected()) {
+      String[] words = category.split(" ");
+      return words[0];
+    }
+
+    return "";
   }
 }

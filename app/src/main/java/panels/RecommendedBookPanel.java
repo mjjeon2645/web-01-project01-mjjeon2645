@@ -5,32 +5,31 @@ import utils.BooksLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RecommendedBookPanel extends JPanel {
-  public RecommendedBookPanel() throws FileNotFoundException {
+  public RecommendedBookPanel(String selectedCategory) throws FileNotFoundException {
     this.setLayout(new GridLayout(1, 2, 100, 10));
     this.setOpaque(false);
 
     BooksLoader booksLoader = new BooksLoader();
+
     List<Book> books = booksLoader.load();
 
-    favoriteBookPanel(books);
+    favoriteBookPanel(books, selectedCategory);
 
-    challengeBookPanel(books);
-
-    // TODO. 추후 loader로 구현할 것
-//    BooksLoader booksLoader = new BooksLoader();
-//    List<Book> books = booksLoader.load();
-//
-//    for (Book book : books) {
-//      JLabel label = new JLabel(book.title());
-//      this.add(label);
-//    }
+    challengeBookPanel(books, selectedCategory);
   }
 
-  public void favoriteBookPanel(List<Book> books) {
+  public void favoriteBookPanel(List<Book> books, String selectedCategory) {
     JPanel favoriteBookPanel = new JPanel();
     favoriteBookPanel.setLayout(new BorderLayout());
     favoriteBookPanel.setOpaque(false);
@@ -48,24 +47,47 @@ public class RecommendedBookPanel extends JPanel {
     JLabel layoutLabel = new JLabel("  ");
     imageAddPanel.add(layoutLabel, BorderLayout.CENTER);
 
-    Book testBook = books.get(0);
-    String imageRoot = testBook.imageRoot();
+    Book favoriteBook = recommendFavoriteBook(books, selectedCategory);
+    String imageRoot = favoriteBook.imageRoot();
     ImagePanel imagePanel = new ImagePanel(imageRoot);
     imageAddPanel.add(imagePanel, BorderLayout.PAGE_END);
 
-    JPanel infoPanel = new JPanel();
-    infoPanel.setOpaque(false);
-    infoPanel.setLayout(new GridLayout(0, 1, 5, 5));
-    favoriteBookPanel.add(infoPanel, BorderLayout.CENTER);
+    JPanel informationPanel = new JPanel();
+    informationPanel.setOpaque(false);
+    informationPanel.setLayout(new GridLayout(0, 1, 5, 5));
+    favoriteBookPanel.add(informationPanel, BorderLayout.CENTER);
 
-    infoPanel.add(new JLabel("  "));
+    informationPanel.add(new JLabel("  "));
 
-    infoPanel.add(new JLabel("제목: " + testBook.bookTitle()));
+    JLabel bookTitleLabel = new JLabel("제목: " + favoriteBook.bookTitle());
+    informationPanel.add(bookTitleLabel);
 
-    infoPanel.add(new JLabel("저자: " + testBook.bookAuthor()));
+    JLabel bookAuthorLabel = new JLabel("저자: " + favoriteBook.bookAuthor());
+    informationPanel.add(bookAuthorLabel);
+
+    JLabel hyperlinkLabel = new JLabel(">>책 사러가기 click!<<");
+    hyperlinkLabel.setForeground(new Color(255, 0, 113));
+    hyperlinkLabel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (Desktop.isDesktopSupported()) {
+          Desktop desktop = Desktop.getDesktop();
+          try {
+            URI uri = new URI(favoriteBook.url());
+            desktop.browse(uri);
+          } catch (URISyntaxException ex) {
+            throw new RuntimeException(ex);
+          } catch (IOException ex) {
+            throw new RuntimeException(ex);
+          }
+        }
+      }
+    });
+
+    informationPanel.add(hyperlinkLabel);
   }
 
-  public void challengeBookPanel(List<Book> books) {
+  public void challengeBookPanel(List<Book> books, String selectedCategory) {
     JPanel challengeBookPanel = new JPanel();
     challengeBookPanel.setOpaque(false);
     challengeBookPanel.setLayout(new BorderLayout());
@@ -83,20 +105,75 @@ public class RecommendedBookPanel extends JPanel {
     JLabel layoutLabel = new JLabel("  ");
     imageAddPanel.add(layoutLabel, BorderLayout.CENTER);
 
-    Book testBook = books.get(1);
-    String imageRoot = testBook.imageRoot();
+    Book challengeBook = recommendChallengeBook(books, selectedCategory);
+    String imageRoot = challengeBook.imageRoot();
     ImagePanel imagePanel = new ImagePanel(imageRoot);
     imageAddPanel.add(imagePanel, BorderLayout.PAGE_END);
 
-    JPanel infoPanel = new JPanel();
-    infoPanel.setOpaque(false);
-    infoPanel.setLayout(new GridLayout(0, 1, 5, 5));
-    challengeBookPanel.add(infoPanel, BorderLayout.CENTER);
+    JPanel informationPanel = new JPanel();
+    informationPanel.setOpaque(false);
+    informationPanel.setLayout(new GridLayout(0, 1, 5, 5));
+    challengeBookPanel.add(informationPanel, BorderLayout.CENTER);
 
-    infoPanel.add(new JLabel("  "));
+    informationPanel.add(new JLabel("  "));
 
-    infoPanel.add(new JLabel("제목: " + testBook.bookTitle()));
+    JLabel bookTitleLabel = new JLabel("제목: " + challengeBook.bookTitle());
+    informationPanel.add(bookTitleLabel);
 
-    infoPanel.add(new JLabel("저자: " + testBook.bookAuthor()));
+    JLabel bookAuthorLabel = new JLabel("저자: " + challengeBook.bookAuthor());
+    informationPanel.add(bookAuthorLabel);
+
+    JLabel hyperlinkLabel = new JLabel(">>책 사러가기 click!<<");
+    hyperlinkLabel.setForeground(new Color(255, 0, 113));
+    hyperlinkLabel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (Desktop.isDesktopSupported()) {
+          Desktop desktop = Desktop.getDesktop();
+          try {
+            URI uri = new URI(challengeBook.url());
+            desktop.browse(uri);
+          } catch (URISyntaxException ex) {
+            throw new RuntimeException(ex);
+          } catch (IOException ex) {
+            throw new RuntimeException(ex);
+          }
+        }
+      }
+    });
+
+    informationPanel.add(hyperlinkLabel);
+  }
+
+  public Book recommendFavoriteBook(List<Book> books, String selectedCategory) {
+    List<Book> favoriteBooks = new ArrayList<>();
+
+    for (int i = 0; i < books.size(); i += 1) {
+      if (books.get(i).category().equals(selectedCategory)) {
+        favoriteBooks.add(books.get(i));
+      }
+    }
+
+    Random random = new Random();
+
+    int randomIndexNumber = random.nextInt(3);
+
+    return favoriteBooks.get(randomIndexNumber);
+  }
+
+  public Book recommendChallengeBook(List<Book> books, String selectedCategory) {
+    List<Book> challengeBooks = new ArrayList<>();
+
+    for (int i = 0; i < books.size(); i += 1) {
+      if (!books.get(i).category().equals(selectedCategory)) {
+        challengeBooks.add(books.get(i));
+      }
+    }
+
+    Random random = new Random();
+
+    int randomIndexNumber = random.nextInt(books.size() - 3);
+
+    return challengeBooks.get(randomIndexNumber);
   }
 }

@@ -40,6 +40,7 @@ public class ReviewPanel extends JPanel {
         review.plusCount();
       }
     });
+
     containerPanel.add(reviewTitleLabel);
 
     JLabel authorLabel = new JLabel(review.author());

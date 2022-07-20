@@ -73,7 +73,7 @@ public class BookReview {
     menuPanel.add(recommendMenu());
     frame.setVisible(true);
 
-//   프레임 자동갱신 기능(팝업을 띄웠을 때)
+//   TODO: 프레임 자동갱신 기능(팝업을 띄웠을 때)
 //    frame.addWindowListener(new WindowAdapter() {
 //      @Override
 //      public void windowActivated(WindowEvent e) {
