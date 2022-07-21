@@ -6,8 +6,7 @@ import utils.ReviewsLoader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -42,7 +41,8 @@ public class BookReview {
 
   public void initFrameAndImage() {
     frame = new JFrame("Book Review 100");
-    frame.setSize(780, 554);
+    frame.setSize(780, 580);
+    frame.setLocation(100, 100);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.addWindowListener(new WindowAdapter() {
       @Override
@@ -69,22 +69,22 @@ public class BookReview {
 
     menuPanel.add(displayReviewsMenu());
     menuPanel.add(writeReviewMenu());
-    menuPanel.add(searchMenu());
-    menuPanel.add(recommendMenu());
+    menuPanel.add(searchReviewsMenu());
+    menuPanel.add(recommendBooksMenu());
     frame.setVisible(true);
 
 //   TODO: 프레임 자동갱신 기능(팝업을 띄웠을 때)
-//    frame.addWindowListener(new WindowAdapter() {
-//      @Override
-//      public void windowActivated(WindowEvent e) {
-//        super.windowActivated(e);
-//
+    frame.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowActivated(WindowEvent e) {
+        super.windowActivated(e);
+
 //        // what panel ? ... int selectedMenu = 0;
-//        ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
-//        showContentPanel(reviewsPanel);
-//      }
-//    });
-    ///////
+        ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+        showContentPanel(reviewsPanel);
+      }
+    });
+    /////
   }
 
   public JButton displayReviewsMenu() {
@@ -116,7 +116,7 @@ public class BookReview {
     return button;
   }
 
-  public JButton searchMenu() {
+  public JButton searchReviewsMenu() {
     JButton button = new JButton("리뷰 검색하기");
     button.setBackground(Color.WHITE);
     button.setPreferredSize(new Dimension(130, 45));
@@ -128,7 +128,7 @@ public class BookReview {
     return button;
   }
 
-  public JButton recommendMenu() {
+  public JButton recommendBooksMenu() {
     JButton button = new JButton("오늘의 추천 책");
     button.setBackground(Color.WHITE);
     button.setPreferredSize(new Dimension(130, 45));
