@@ -1,6 +1,5 @@
 package panels;
 
-import frames.WarningMessageFrame;
 import models.Review;
 
 import javax.swing.*;
@@ -13,9 +12,12 @@ import java.util.List;
 public class WritePanel extends JPanel {
   private final JLabel characterCountLabel;
   private List<Review> reviews;
+  private JPanel contentPanel;
 
-  public WritePanel(List<Review> reviews) throws FileNotFoundException {
+  public WritePanel(List<Review> reviews, JPanel contentPanel) throws FileNotFoundException {
     this.reviews = reviews;
+    this.contentPanel = contentPanel;
+
     this.setOpaque(false);
     this.setLayout(new BorderLayout());
 
@@ -37,14 +39,13 @@ public class WritePanel extends JPanel {
     titleField.setText("제목을 적어주세요.");
     panel.add(titleField);
 
-
     JPanel textAreaPanel = new JPanel();
     textAreaPanel.setLayout(new BorderLayout());
     textAreaPanel.setOpaque(false);
     this.add(textAreaPanel, BorderLayout.CENTER);
 
     JTextArea reviewTextArea = new JTextArea(20, 25);
-    reviewTextArea.setText("오늘 읽은 책은 어땠나요?" + "\n" + "100자 이내로 기록해서 공유해보세요.");
+    reviewTextArea.setText("오늘 읽은 책은 어땠나요? 100자 이내로 기록해서 공유해보세요.");
     reviewTextArea.setLineWrap(true);
     reviewTextArea.addKeyListener(new KeyAdapter() {
       @Override
@@ -78,11 +79,6 @@ public class WritePanel extends JPanel {
       String password = passwordField.getText();
       String title = titleField.getText();
       String text = reviewTextArea.getText();
-
-//      if (isBlank(author, password, title, text)) {
-//        String message = "모든 항목을 빠짐없이 입력하세요!";
-//        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
-//      }
 
       if (author.isBlank()) {
         authorField.setBackground(Color.PINK);
@@ -145,7 +141,7 @@ public class WritePanel extends JPanel {
   public void refreshReviewsPanel(List<Review> reviews) {
     this.removeAll();
 
-    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews, contentPanel);
 
     reviewsPanel.removeAll();
     reviewsPanel.setLayout(new GridLayout(0, 1, 10, 10));
@@ -153,7 +149,7 @@ public class WritePanel extends JPanel {
 
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY)) {
-        ReviewPanel reviewPanel = new ReviewPanel(review, reviews);
+        ReviewPanel reviewPanel = new ReviewPanel(review, reviews, contentPanel);
         reviewsPanel.add(reviewPanel);
       }
     }

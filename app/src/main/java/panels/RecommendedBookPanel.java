@@ -1,13 +1,13 @@
 package panels;
 
 import models.Book;
+import models.RecommendationHistory;
 import utils.BooksLoader;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,7 +16,13 @@ import java.util.List;
 import java.util.Random;
 
 public class RecommendedBookPanel extends JPanel {
-  public RecommendedBookPanel(String selectedCategory) throws FileNotFoundException {
+  private List<RecommendationHistory> recommendationHistories;
+  private Book favoriteBook;
+  private Book challengeBook;
+
+  public RecommendedBookPanel(String selectedCategory, List<RecommendationHistory> recommendationHistories) throws IOException {
+    this.recommendationHistories = recommendationHistories;
+
     this.setLayout(new GridLayout(1, 2, 100, 10));
     this.setOpaque(false);
 
@@ -27,6 +33,10 @@ public class RecommendedBookPanel extends JPanel {
     favoriteBookPanel(books, selectedCategory);
 
     challengeBookPanel(books, selectedCategory);
+
+    RecommendationHistory recommendationHistory = new RecommendationHistory(favoriteBook, challengeBook);
+
+    recommendationHistories.add(recommendationHistory);
   }
 
   public void favoriteBookPanel(List<Book> books, String selectedCategory) {
@@ -47,7 +57,7 @@ public class RecommendedBookPanel extends JPanel {
     JLabel layoutLabel = new JLabel("  ");
     imageAddPanel.add(layoutLabel, BorderLayout.CENTER);
 
-    Book favoriteBook = recommendFavoriteBook(books, selectedCategory);
+    favoriteBook = recommendFavoriteBook(books, selectedCategory);
     String imageRoot = favoriteBook.imageRoot();
     ImagePanel imagePanel = new ImagePanel(imageRoot);
     imageAddPanel.add(imagePanel, BorderLayout.PAGE_END);
@@ -105,7 +115,7 @@ public class RecommendedBookPanel extends JPanel {
     JLabel layoutLabel = new JLabel("  ");
     imageAddPanel.add(layoutLabel, BorderLayout.CENTER);
 
-    Book challengeBook = recommendChallengeBook(books, selectedCategory);
+    challengeBook = recommendChallengeBook(books, selectedCategory);
     String imageRoot = challengeBook.imageRoot();
     ImagePanel imagePanel = new ImagePanel(imageRoot);
     imageAddPanel.add(imagePanel, BorderLayout.PAGE_END);

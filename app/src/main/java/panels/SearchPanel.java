@@ -9,9 +9,12 @@ import java.util.List;
 
 public class SearchPanel extends JPanel {
   private List<Review> reviews;
+  private JPanel contentPanel ;
 
-  public SearchPanel(List<Review> reviews) {
+  public SearchPanel(List<Review> reviews, JPanel contentPanel) {
     this.reviews = reviews;
+    this.contentPanel = contentPanel;
+
     this.setLayout(new BorderLayout());
     this.setOpaque(false);
 
@@ -47,12 +50,8 @@ public class SearchPanel extends JPanel {
 
         this.setVisible(false);
         this.setVisible(true);
-
-//        String message = "검색어를 입력하세요!";
-//        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
       }
 
-      // TODO. 여기 중복 해결해줄 수는 없을까?
       if (!text.isBlank()) {
         String selection = String.valueOf(comboBox.getSelectedItem());
 
@@ -78,7 +77,7 @@ public class SearchPanel extends JPanel {
 
     initForm(reviews);
 
-    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews, contentPanel);
 
     reviewsPanel.removeAll();
     reviewsPanel.setLayout(new GridLayout(0, 1, 10, 10));
@@ -87,7 +86,7 @@ public class SearchPanel extends JPanel {
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY) &&
           review.author().contains(text)) {
-        ReviewPanel reviewPanel = new ReviewPanel(review, reviews);
+        ReviewPanel reviewPanel = new ReviewPanel(review, reviews, contentPanel);
         reviewsPanel.add(reviewPanel);
       }
     }
@@ -103,7 +102,7 @@ public class SearchPanel extends JPanel {
 
     initForm(reviews);
 
-    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews, contentPanel);
 
     reviewsPanel.removeAll();
     reviewsPanel.setLayout(new GridLayout(0, 1, 10, 10));
@@ -112,7 +111,7 @@ public class SearchPanel extends JPanel {
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY) &&
           review.title().contains(text)) {
-        ReviewPanel reviewPanel = new ReviewPanel(review, reviews);
+        ReviewPanel reviewPanel = new ReviewPanel(review, reviews, contentPanel);
         reviewsPanel.add(reviewPanel);
       }
     }
@@ -128,7 +127,7 @@ public class SearchPanel extends JPanel {
 
     initForm(reviews);
 
-    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews, contentPanel);
 
     reviewsPanel.removeAll();
     reviewsPanel.setLayout(new GridLayout(0, 1, 10, 10));
@@ -137,7 +136,7 @@ public class SearchPanel extends JPanel {
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY) &&
           review.text().contains(text)) {
-        ReviewPanel reviewPanel = new ReviewPanel(review, reviews);
+        ReviewPanel reviewPanel = new ReviewPanel(review, reviews, contentPanel);
         reviewsPanel.add(reviewPanel);
       }
     }

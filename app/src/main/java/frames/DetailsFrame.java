@@ -20,10 +20,12 @@ public class DetailsFrame extends JFrame {
   private JTextArea contentArea;
   private JTextField passwordField;
   private JLabel characterCountLabel;
+  private JPanel contentPanel;
 
-  public DetailsFrame(List<Review> reviews, Review review) {
+  public DetailsFrame(List<Review> reviews, Review review, JPanel contentPanel) {
     this.reviews = reviews;
     this.review = review;
+    this.contentPanel = contentPanel;
 
     this.setTitle("상세보기");
     this.setSize(500, 500);
@@ -60,7 +62,6 @@ public class DetailsFrame extends JFrame {
     countLabel.setBounds(110, 25, 150, 30);
     detailsPanel.add(countLabel);
   }
-
 
   public void initAuthorField() {
     JLabel authorLabel = new JLabel("작성자");
@@ -132,12 +133,10 @@ public class DetailsFrame extends JFrame {
         review.deleted();
         this.setVisible(false);
 
-//        refreshReviewsPanel(reviews);
+        refreshReviewsPanel(reviews);
       }
 
       if (!review.password().equals(passwordField.getText())) {
-//        String message = "비밀번호를 확인하세요!";
-//        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
         passwordField.setBackground(Color.PINK);
         passwordField.setText("비밀번호를 확인하세요!");
       }
@@ -157,11 +156,9 @@ public class DetailsFrame extends JFrame {
 
         this.setVisible(false);
 
-//        refreshReviewsPanel(reviews);
+        refreshReviewsPanel(reviews);
       }
       if (!review.password().equals(passwordField.getText())) {
-//        String message = "비밀번호를 확인하세요!";
-//        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
         passwordField.setBackground(Color.PINK);
         passwordField.setText("비밀번호를 확인하세요!");
       }
@@ -171,22 +168,20 @@ public class DetailsFrame extends JFrame {
   }
 
   public void refreshReviewsPanel(List<Review> reviews) {
-    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews);
+    ReviewsPanel reviewsPanel = new ReviewsPanel(reviews, contentPanel);
 
-    reviewsPanel.removeAll();
+    contentPanel.removeAll();
     reviewsPanel.setLayout(new GridLayout(0, 1, 10, 10));
     reviewsPanel.setOpaque(false);
 
     for (Review review : reviews) {
       if (review.state().equals(Review.DISPLAY)) {
-        ReviewPanel reviewPanel = new ReviewPanel(review, reviews);
-        reviewsPanel.add(reviewPanel);
+        ReviewPanel reviewPanel = new ReviewPanel(review, reviews, contentPanel);
       }
     }
-// TODO: 문제 해결해야 함
-//    contentPanel.add(reviewsPanel);
-
-    reviewsPanel.setVisible(false);
-    reviewsPanel.setVisible(true);
+    contentPanel.removeAll();
+    contentPanel.add(reviewsPanel);
+    contentPanel.setVisible(false);
+    contentPanel.setVisible(true);
   }
 }

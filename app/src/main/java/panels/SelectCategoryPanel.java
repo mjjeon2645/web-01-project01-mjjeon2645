@@ -1,11 +1,12 @@
 package panels;
 
 import frames.WarningMessageFrame;
-import org.checkerframework.checker.units.qual.C;
+import models.RecommendationHistory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,11 @@ import static java.awt.BorderLayout.CENTER;
 
 public class SelectCategoryPanel extends JPanel {
   private final JPanel choicePanel;
+  private List<RecommendationHistory> bookRecommendationHistories;
 
-  public SelectCategoryPanel() {
+  public SelectCategoryPanel(List<RecommendationHistory> bookRecommendationHistories) {
+    this.bookRecommendationHistories = bookRecommendationHistories;
+
     this.setLayout(new BorderLayout());
     this.setOpaque(false);
 
@@ -112,9 +116,11 @@ public class SelectCategoryPanel extends JPanel {
         this.add(titlePanel, BorderLayout.PAGE_START);
 
         try {
-          RecommendedBookPanel recommendedBookPanel = new RecommendedBookPanel(selectedCategory);
+          RecommendedBookPanel recommendedBookPanel = new RecommendedBookPanel(selectedCategory, bookRecommendationHistories);
           this.add(recommendedBookPanel, CENTER);
         } catch (FileNotFoundException e) {
+          throw new RuntimeException(e);
+        } catch (IOException e) {
           throw new RuntimeException(e);
         }
 

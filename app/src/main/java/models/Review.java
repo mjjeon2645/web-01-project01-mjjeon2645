@@ -80,7 +80,7 @@ public class Review {
   }
 
   public String toCsvRow() {
-    return String.join(",", author, password, title, text, Integer.toString(count), state);
+    return String.join(",", author, password, title, text.replace("\n", "/// "), Integer.toString(count), state);
   }
 
   @Override

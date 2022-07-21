@@ -40,7 +40,7 @@ public class ReviewsLoader {
   public Review parseReview(String text) {
     String[] words = text.split(",");
 
-    return new Review(words[0], words[1], words[2], words[3],
+    return new Review(words[0], words[1], words[2], words[3].replace("/// ", "\n"),
         Integer.parseInt(words[4]), words[5]);
   }
 }
