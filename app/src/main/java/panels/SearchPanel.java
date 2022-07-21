@@ -33,9 +33,23 @@ public class SearchPanel extends JPanel {
     JButton searchButton = new JButton("확인");
     searchButton.addActionListener(event -> {
       String text = searchField.getText();
+
       if (text.isBlank()) {
-        String message = "검색어를 입력하세요!";
-        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
+        JLabel warningMessageLabel = new JLabel("검색어를 입력하세요!");
+        warningMessageLabel.setFont(new Font("Verdada", Font.PLAIN, 16));
+
+        this.removeAll();
+
+        this.add(formPanel, BorderLayout.PAGE_START);
+
+        this.add(warningMessageLabel, BorderLayout.CENTER);
+        warningMessageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        this.setVisible(false);
+        this.setVisible(true);
+
+//        String message = "검색어를 입력하세요!";
+//        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
       }
 
       // TODO. 여기 중복 해결해줄 수는 없을까?

@@ -2,6 +2,8 @@ package panels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CategoryPanel extends JPanel {
   private JCheckBox checkBox;
@@ -12,11 +14,41 @@ public class CategoryPanel extends JPanel {
 
     this.setLayout(new BorderLayout());
     this.setOpaque(false);
+    this.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        if (checkBox.isSelected()) {
+          checkBox.setSelected(false);
+          return;
+        }
+
+        if (!checkBox.isSelected()) {
+          checkBox.setSelected(true);
+        }
+      }
+    });
+
     checkBox = new JCheckBox();
     this.add(checkBox, BorderLayout.WEST);
 
     JLabel label = new JLabel(category);
-    label.setFont(new Font("Verdada", Font.PLAIN, 14));
+    label.setFont(new Font("Verdada", Font.PLAIN, 15));
+    label.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        if (checkBox.isSelected()) {
+          checkBox.setSelected(false);
+          return;
+        }
+
+        if (!checkBox.isSelected()) {
+          checkBox.setSelected(true);
+        }
+      }
+    });
+
     this.add(label);
   }
 

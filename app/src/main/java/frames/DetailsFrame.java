@@ -7,6 +7,8 @@ import panels.ReviewsPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class DetailsFrame extends JFrame {
@@ -17,6 +19,7 @@ public class DetailsFrame extends JFrame {
   private JTextField titleField;
   private JTextArea contentArea;
   private JTextField passwordField;
+  private JLabel characterCountLabel;
 
   public DetailsFrame(List<Review> reviews, Review review) {
     this.reviews = reviews;
@@ -24,11 +27,14 @@ public class DetailsFrame extends JFrame {
 
     this.setTitle("상세보기");
     this.setSize(500, 500);
+    this.setLocation(750, 100);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setVisible(true);
 
     detailsPanel = new JPanel();
     detailsPanel.setLayout(null);
+
+    initViewCountField();
 
     initAuthorField();
 
@@ -45,44 +51,77 @@ public class DetailsFrame extends JFrame {
     this.add(detailsPanel);
   }
 
+  public void initViewCountField() {
+    JLabel viewCountLabel = new JLabel("조회수");
+    viewCountLabel.setBounds(50, 15, 50, 50);
+    detailsPanel.add(viewCountLabel);
+
+    JLabel countLabel = new JLabel(String.valueOf(review.count()));
+    countLabel.setBounds(110, 25, 150, 30);
+    detailsPanel.add(countLabel);
+  }
+
+
   public void initAuthorField() {
     JLabel authorLabel = new JLabel("작성자");
-    authorLabel.setBounds(50, 20, 50, 50);
+    authorLabel.setBounds(50, 55, 50, 50);
     detailsPanel.add(authorLabel);
 
     authorField = new JTextField(20);
     authorField.setText(review.author());
     authorField.setEditable(false);
-    authorField.setBounds(110, 30, 150, 30);
+    authorField.setBounds(110, 65, 150, 30);
     detailsPanel.add(authorField);
   }
 
   public void initPasswordField() {
     JLabel password = new JLabel("비밀번호");
-    password.setBounds(50, 70, 100, 30);
+    password.setBounds(50, 105, 100, 30);
     detailsPanel.add(password);
 
     passwordField = new JTextField(4);
-    passwordField.setBounds(110, 70, 250, 30);
+    passwordField.setBounds(110, 105, 150, 30);
     detailsPanel.add(passwordField);
   }
 
   public void initTitleField() {
     JLabel title = new JLabel("제목");
-    title.setBounds(50, 110, 30, 30);
+    title.setBounds(50, 150, 30, 30);
     detailsPanel.add(title);
 
     titleField = new JTextField(review.title());
-    titleField.setBounds(110, 110, 350, 30);
+    titleField.setBounds(110, 150, 350, 30);
     detailsPanel.add(titleField);
   }
 
   public void initTextArea() {
     contentArea = new JTextArea();
     contentArea.setText(review.text());
+    contentArea.setBounds(50, 200, 405, 180);
     contentArea.setLineWrap(true);
-    contentArea.setBounds(50, 160, 405, 250);
+    contentArea.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyTyped(KeyEvent e) {
+        if (((JTextArea) e.getSource()).getText().length() > 99) {
+          e.consume();
+        }
+
+        characterCountLabel.setText("현재 글자수: " + contentArea.getText().length());
+        if (characterCountLabel.getText().equals("현재 글자수: 100")) {
+          characterCountLabel.setForeground(Color.RED);
+        }
+
+        if (!characterCountLabel.getText().equals("현재 글자수: 100")) {
+          characterCountLabel.setForeground(Color.BLACK);
+      }
+    }});
+
     detailsPanel.add(contentArea);
+
+    characterCountLabel = new JLabel("현재 글자수: " + contentArea.getText().length());
+    characterCountLabel.setFont(new Font("Verdada", Font.ITALIC, 14));
+    characterCountLabel.setBounds(360, 350, 100, 100);
+    detailsPanel.add(characterCountLabel);
   }
 
   public void initDeleteButton() {
@@ -93,12 +132,14 @@ public class DetailsFrame extends JFrame {
         review.deleted();
         this.setVisible(false);
 
-        refreshReviewsPanel(reviews);
+//        refreshReviewsPanel(reviews);
       }
 
       if (!review.password().equals(passwordField.getText())) {
-        String message = "비밀번호를 확인하세요!";
-        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
+//        String message = "비밀번호를 확인하세요!";
+//        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
+        passwordField.setBackground(Color.PINK);
+        passwordField.setText("비밀번호를 확인하세요!");
       }
     });
 
@@ -116,11 +157,13 @@ public class DetailsFrame extends JFrame {
 
         this.setVisible(false);
 
-        refreshReviewsPanel(reviews);
+//        refreshReviewsPanel(reviews);
       }
       if (!review.password().equals(passwordField.getText())) {
-        String message = "비밀번호를 확인하세요!";
-        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
+//        String message = "비밀번호를 확인하세요!";
+//        WarningMessageFrame warningMessageFrame = new WarningMessageFrame(message);
+        passwordField.setBackground(Color.PINK);
+        passwordField.setText("비밀번호를 확인하세요!");
       }
     });
 
